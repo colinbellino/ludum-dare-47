@@ -9,10 +9,7 @@ public class PathfinderAutoScan : MonoBehaviour
 	{
 		_pathfinder = FindObjectOfType<AstarPath>();
 		_pathfinder.Scan();
-	}
 
-	protected void Start()
-	{
 		UpdateGraph(Vector3.zero);
 	}
 

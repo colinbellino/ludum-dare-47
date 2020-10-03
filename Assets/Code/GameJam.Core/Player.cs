@@ -1,5 +1,6 @@
 using Pathfinding;
 using UnityEngine;
+using Zenject;
 
 public class Player : MonoBehaviour
 {
@@ -7,10 +8,18 @@ public class Player : MonoBehaviour
 	[SerializeField] private Transform _cursor;
 	[SerializeField] private float _speed = 1f;
 
+	private GameConfig _config;
+
 	private AIPath _aiPath;
 	private Camera _camera;
 	private GameActions _actions;
 	private Vector3? _destination;
+
+	[Inject]
+	public void Construct(GameConfig gameConfig)
+	{
+		_config = gameConfig;
+	}
 
 	protected void Awake()
 	{
@@ -33,7 +42,7 @@ public class Player : MonoBehaviour
 			Debug.DrawRay(ray.origin, ray.direction * 999f, Color.red);
 			if (Physics.Raycast(ray.origin, ray.direction, out var hit, Mathf.Infinity, _groundMask))
 			{
-				if (hit.collider.CompareTag(Settings.GroundTag))
+				if (hit.collider.CompareTag(_config.GroundTag))
 				{
 					_destination = hit.point;
 				}

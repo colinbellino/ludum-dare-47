@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.unity.2d.pixel-perfect": "2.0.4",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
@@ -57,6 +58,10 @@
     "com.unity.modules.xr": "1.0.0"
   },
   "lock": {
+    "com.cysharp.unitask": {
+      "revision": "HEAD",
+      "hash": "944b61f28c1def249ee7843209636f4d882e76e7"
+    },
     "com.unity.2d.tilemap.extras": {
       "revision": "HEAD",
       "hash": "e9955e7528762a4ba6cd0471215e2c2135436ebe"
