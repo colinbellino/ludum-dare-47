@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +15,8 @@ public class TimeLord : IInitializable, ITickable
 	public void Initialize()
 	{
 		Reset();
+
+		GameEvents.DayEnded += OnDayEnded;
 	}
 
 	public void Tick()
@@ -28,8 +31,14 @@ public class TimeLord : IInitializable, ITickable
 		if (_state.TimeCurrent >= _state.TimeEnd)
 		{
 			_isDayOver = true;
+			GameEvents.DayEnded?.Invoke();
 			UnityEngine.Debug.Log("Day over !");
 		}
+	}
+
+	private void OnDayEnded()
+	{
+		Reset();
 	}
 
 	private void Reset()
