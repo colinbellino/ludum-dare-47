@@ -1,27 +1,22 @@
 using UnityEngine;
 using Zenject;
 
-public class TimeLord : MonoBehaviour
+public class TimeLord : IInitializable, ITickable
 {
-	[SerializeField] private float _duration = 10f;
-
 	private bool _isDayOver;
 	private GameState _state;
 
-	[Inject]
-	public void Construct(GameState state)
+	public TimeLord(GameState state)
 	{
 		_state = state;
 	}
 
-	protected void Awake()
+	public void Initialize()
 	{
-		_state.DayDuration = _duration;
-		_state.TimeStart = Time.time;
-		_state.TimeEnd = _state.TimeStart + _state.DayDuration;
+		Reset();
 	}
 
-	protected void Update()
+	public void Tick()
 	{
 		if (_isDayOver)
 		{
@@ -35,5 +30,12 @@ public class TimeLord : MonoBehaviour
 			_isDayOver = true;
 			UnityEngine.Debug.Log("Day over !");
 		}
+	}
+
+	private void Reset()
+	{
+		_state.DayDuration = 10f;
+		_state.TimeStart = Time.time;
+		_state.TimeEnd = _state.TimeStart + _state.DayDuration;
 	}
 }

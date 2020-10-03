@@ -6,6 +6,8 @@ public class GameInstaller : MonoInstaller
 	{
 		Container.Bind<GameState>().AsSingle();
 
+		Container.BindInterfacesAndSelfTo<TimeLord>().AsSingle().NonLazy();
+
 		InstallDebugTools();
 	}
 
