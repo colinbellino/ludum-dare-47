@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Zenject;
 
-public enum GameStates { Title, Play, GameOver }
+public enum GameStates { Init, Title, Play, GameOver }
 
 public class GameStateMachine : IInitializable, ITickable
 {
@@ -12,6 +12,7 @@ public class GameStateMachine : IInitializable, ITickable
 
 	public GameStateMachine(
 		GameConfig config,
+		InitState.Factory initStateFactory,
 		TitleState.Factory titleStateFactory,
 		PlayState.Factory playStateFactory,
 		GameOverState.Factory gameOverStateFactory
@@ -19,6 +20,7 @@ public class GameStateMachine : IInitializable, ITickable
 	{
 		_config = config;
 		_states = new Dictionary<GameStates, IState> {
+			{ GameStates.Init, initStateFactory.Create(this) },
 			{ GameStates.Title, titleStateFactory.Create(this) },
 			{ GameStates.Play, playStateFactory.Create(this) },
 			{ GameStates.GameOver, gameOverStateFactory.Create(this) },
@@ -27,14 +29,7 @@ public class GameStateMachine : IInitializable, ITickable
 
 	public void Initialize()
 	{
-		if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == _config.TitleSceneName)
-		{
-			TitleScreen();
-		}
-		else
-		{
-			Play();
-		}
+		ChangeState(GameStates.Init);
 	}
 
 	public void Tick() => _currentState?.Tick();

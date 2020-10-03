@@ -6,4 +6,5 @@ public class GameState
 	public float TimeCurrent;
 	public float TimeEnd;
 	public float DayDuration;
+	public Vector3? PlayerDestination;
 }
