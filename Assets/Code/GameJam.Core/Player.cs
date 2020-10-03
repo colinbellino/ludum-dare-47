@@ -1,9 +1,5 @@
+using Pathfinding;
 using UnityEngine;
-
-public static class Settings
-{
-	public static string GroundTag = "Ground";
-}
 
 public class Player : MonoBehaviour
 {
@@ -11,6 +7,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private Transform _cursor;
 	[SerializeField] private float _speed = 1f;
 
+	private AIPath _aiPath;
 	private Camera _camera;
 	private GameActions _actions;
 	private Vector3? _destination;
@@ -21,6 +18,9 @@ public class Player : MonoBehaviour
 		_actions.Enable();
 
 		_camera = Camera.main;
+		_aiPath = GetComponent<AIPath>();
+
+		_aiPath.maxSpeed = _speed;
 	}
 
 	protected void Update()
@@ -47,8 +47,6 @@ public class Player : MonoBehaviour
 		if (_destination != null)
 		{
 			_cursor.transform.position = _destination.Value;
-			transform.position = Vector3.MoveTowards(transform.position, _destination.Value, _speed * Time.deltaTime);
-			// transform.position = _destination.Value;
 		}
 	}
 }
