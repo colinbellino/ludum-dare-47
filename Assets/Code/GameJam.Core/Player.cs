@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
 				}
 				else
 				{
-					UnityEngine.Debug.Log("Can't move here.");
+					UnityEngine.Debug.Log("Can't move here (" + hit.collider.name + ").");
 				}
 			}
 		}

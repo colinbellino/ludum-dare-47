@@ -5,6 +5,7 @@ public class TimeLord : MonoBehaviour
 {
 	[SerializeField] private float _duration = 10f;
 
+	private bool _isDayOver;
 	private GameState _state;
 
 	[Inject]
@@ -22,12 +23,17 @@ public class TimeLord : MonoBehaviour
 
 	protected void Update()
 	{
+		if (_isDayOver)
+		{
+			return;
+		}
+
 		_state.TimeCurrent = Time.time - _state.TimeStart;
 
-		// UnityEngine.Debug.Log(_state.TimeEnd - _state.TimeCurrent);
 		if (_state.TimeCurrent >= _state.TimeEnd)
 		{
-			UnityEngine.Debug.Log("done yayyy");
+			_isDayOver = true;
+			UnityEngine.Debug.Log("Day over !");
 		}
 	}
 }
