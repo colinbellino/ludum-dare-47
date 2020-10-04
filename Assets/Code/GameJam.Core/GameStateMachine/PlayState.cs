@@ -1,8 +1,5 @@
-using Cysharp.Threading.Tasks;
-using Pathfinding;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 public class PlayState : IState
@@ -117,7 +114,7 @@ public class PlayState : IState
 	private void OnExitReached()
 	{
 		// TODO: Differentiate lose / victory
-		_machine.GameOver();
+		_machine.Win();
 	}
 
 	private void ClearPlayerDestination()

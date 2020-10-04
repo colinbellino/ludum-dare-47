@@ -14,6 +14,7 @@ public class GameInstaller : MonoInstaller
 		Container.BindFactory<GameStateMachine, TitleState, TitleState.Factory>();
 		Container.BindFactory<GameStateMachine, PlayState, PlayState.Factory>();
 		Container.BindFactory<GameStateMachine, GameOverState, GameOverState.Factory>();
+		Container.BindFactory<GameStateMachine, WinState, WinState.Factory>();
 		Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle().NonLazy();
 
 		Container.BindInterfacesAndSelfTo<TimeLord>().AsSingle().NonLazy();

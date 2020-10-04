@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Zenject;
 
-public enum GameStates { Init, Title, Play, GameOver }
+public enum GameStates { Init, Title, Play, GameOver, Win }
 
 public class GameStateMachine : IInitializable, ITickable
 {
@@ -15,7 +15,8 @@ public class GameStateMachine : IInitializable, ITickable
 		InitState.Factory initStateFactory,
 		TitleState.Factory titleStateFactory,
 		PlayState.Factory playStateFactory,
-		GameOverState.Factory gameOverStateFactory
+		GameOverState.Factory gameOverStateFactory,
+		WinState.Factory winStateFactory
 	)
 	{
 		_config = config;
@@ -24,6 +25,7 @@ public class GameStateMachine : IInitializable, ITickable
 			{ GameStates.Title, titleStateFactory.Create(this) },
 			{ GameStates.Play, playStateFactory.Create(this) },
 			{ GameStates.GameOver, gameOverStateFactory.Create(this) },
+			{ GameStates.Win, winStateFactory.Create(this) },
 		};
 	}
 
@@ -41,6 +43,7 @@ public class GameStateMachine : IInitializable, ITickable
 	public void Play() => ChangeState(GameStates.Play);
 
 	public void GameOver() => ChangeState(GameStates.GameOver);
+	public void Win() => ChangeState(GameStates.Win);
 
 	public void Quit()
 	{
