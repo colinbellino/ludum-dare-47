@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,12 +8,21 @@ public class Stone : MonoBehaviour, IInteractive
 	[SerializeField] private Vector2Int _direction = Vector2Int.up;
 	[SerializeField] private Collider2D _blockingCollider;
 	[SerializeField] private Slider _progressSlider;
+	[SerializeField] private AudioClip _actionStartAudioClip;
+	[SerializeField] private AudioClip _actionDoneAudioClip;
+
+	private AudioSource _audioSource;
 
 	public Transform Transform => transform;
 
 	private bool _done;
 	private bool _inProgress;
 	private float _startTime;
+
+	protected void Awake()
+	{
+		_audioSource = GetComponent<AudioSource>();
+	}
 
 	protected void Update()
 	{
@@ -37,6 +47,7 @@ public class Stone : MonoBehaviour, IInteractive
 				var origin = new Vector3Int((int)initialPosition.x, (int)initialPosition.y, 0);
 				var destination = origin + (Vector3Int)_direction;
 				GameEvents.StonePushed?.Invoke(origin, destination);
+				PlayActionDoneSoundEffect();
 
 				_done = true;
 			}
@@ -49,6 +60,7 @@ public class Stone : MonoBehaviour, IInteractive
 
 		_inProgress = true;
 		_startTime = Time.time;
+		PlayActionSoundEffect();
 	}
 
 	public void CancelInteract()
@@ -56,5 +68,17 @@ public class Stone : MonoBehaviour, IInteractive
 		_inProgress = false;
 
 		UnityEngine.Debug.Log("Interact cancelled: " + name);
+	}
+
+	private void PlayActionSoundEffect()
+	{
+		_audioSource.clip = _actionStartAudioClip;
+		_audioSource.Play();
+	}
+
+	private void PlayActionDoneSoundEffect()
+	{
+		_audioSource.clip = _actionDoneAudioClip;
+		_audioSource.Play();
 	}
 }
