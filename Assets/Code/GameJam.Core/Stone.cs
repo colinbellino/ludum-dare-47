@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public interface InteractiveElementInterface
@@ -6,7 +7,7 @@ public interface InteractiveElementInterface
 	Vector3 position { get; }
 }
 
-public class Stone: MonoBehaviour, InteractiveElementInterface
+public class Stone : MonoBehaviour, InteractiveElementInterface
 {
 	private bool _isPushed;
 	public Vector3 position { get; private set; }
@@ -17,10 +18,14 @@ public class Stone: MonoBehaviour, InteractiveElementInterface
 		position = transform.position;
 	}
 
-	public void Interact()
+	public async void Interact()
 	{
 		_isPushed = true;
 		// gameObject.GetComponent<Collider2D>().enabled = false;
-		transform.position = new Vector3(8,14.5f);
+		transform.position += Vector3.up;
+
+		await UniTask.NextFrame();
+
+		GameEvents.LayoutChanged?.Invoke(position);
 	}
 }

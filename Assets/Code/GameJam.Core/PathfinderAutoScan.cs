@@ -1,4 +1,3 @@
-using Pathfinding;
 using UnityEngine;
 
 public class PathfinderAutoScan : MonoBehaviour
@@ -8,13 +7,19 @@ public class PathfinderAutoScan : MonoBehaviour
 	protected void Awake()
 	{
 		_pathfinder = FindObjectOfType<AstarPath>();
-		_pathfinder.Scan();
 
-		UpdateGraph(Vector3.zero);
+		GameEvents.LayoutChanged += UpdateGraph;
 	}
 
 	private void UpdateGraph(Vector3 origin)
 	{
-		_pathfinder.UpdateGraphs(new Bounds(origin, new Vector3(10, 10, 1)));
+		UnityEngine.Debug.Log("UpdateGraph at " + origin);
+		_pathfinder.UpdateGraphs(new Bounds(origin, new Vector3(10f, 10f, 1f)));
 	}
+
+	// [ContextMenu("Pouet")]
+	// private void Pouet()
+	// {
+	// 	UpdateGraph(new Vector3(11f, 13f, 0f));
+	// }
 }

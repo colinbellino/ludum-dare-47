@@ -16,6 +16,8 @@ public class PlayState : IState
 	private Transform _cursor;
 	private InteractiveElementInterface _elementSelected;
 
+	private const float _interactRange = 2.0f;
+
 	public PlayState(GameStateMachine machine, GameState gameState, GameConfig gameConfig)
 	{
 		_machine = machine;
@@ -65,15 +67,16 @@ public class PlayState : IState
 		if (_gameState.PlayerDestination != null)
 		{
 			_cursor.position = _gameState.PlayerDestination.Value;
-			_player.AiDestination.target = _cursor;
+			_player.Follow(_cursor);
 
 			if (_elementSelected != null)
 			{
 				var interactiveHit = Physics2D.Raycast(_player.transform.position, _elementSelected.position, Mathf.Infinity, _gameConfig.InteractiveLayer);
-				if (interactiveHit.collider != null && interactiveHit.distance <= 1.0f)
+				if (interactiveHit.collider != null && interactiveHit.distance <= _interactRange)
 				{
 					_elementSelected.Interact();
 					_elementSelected = null;
+					ClearPlayerDestination();
 				}
 			}
 		}
@@ -84,13 +87,17 @@ public class PlayState : IState
 		GameEvents.DayEnded -= OnDayEnded;
 	}
 
-	private void OnDayEnded() => ResetPlayer();
-
-	private void ResetPlayer()
+	private void OnDayEnded()
 	{
 		_player.transform.position = _gameState.PlayerStartPosition;
-		_player.AiDestination.target = null;
+		ClearPlayerDestination();
+	}
+
+	private void ClearPlayerDestination()
+	{
 		_gameState.PlayerDestination = null;
+		_player.Stop();
+		_cursor.position = new Vector3(999, 999, 0);
 	}
 
 	public class Factory : PlaceholderFactory<GameStateMachine, PlayState> { }
