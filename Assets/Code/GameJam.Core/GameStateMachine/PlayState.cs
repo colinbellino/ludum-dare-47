@@ -52,6 +52,12 @@ public class PlayState : IState
 		var mousePosition = _actions.Gameplay.MousePosition.ReadValue<Vector2>();
 		var action1wasReleased = _actions.Gameplay.Action1.ReadValue<float>() > 0f;
 
+		if (Keyboard.current.escapeKey.wasPressedThisFrame)
+		{
+			_machine.Initialize(_gameConfig.TitleSceneName);
+			return;
+		}
+
 		if (Keyboard.current.rKey.wasPressedThisFrame)
 		{
 			UnityEngine.Debug.Log("Restarting...");

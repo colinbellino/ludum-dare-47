@@ -5,10 +5,9 @@ using Zenject;
 public class TitleState : IState
 {
 	private readonly GameStateMachine _machine;
-	private readonly GameState _gameState;
 	private readonly GameConfig _gameConfig;
 
-	public TitleState(GameStateMachine machine, GameState gameState, GameConfig gameConfig)
+	public TitleState(GameStateMachine machine, GameConfig gameConfig)
 	{
 		_machine = machine;
 		_gameConfig = gameConfig;

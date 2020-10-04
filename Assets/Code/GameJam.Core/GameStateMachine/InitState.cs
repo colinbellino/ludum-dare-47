@@ -15,15 +15,14 @@ public class InitState : IState
 
 	public async void Enter(object[] parameters)
 	{
+		var sceneName = SceneManager.GetActiveScene().name;
+
 		if (parameters?.Length > 0)
 		{
-			await SceneManager.LoadSceneAsync((string)parameters[0]);
-			_machine.Play();
-
-			return;
+			sceneName = (string)parameters[0];
 		}
 
-		if (SceneManager.GetActiveScene().name == _gameConfig.TitleSceneName)
+		if (sceneName == _gameConfig.TitleSceneName)
 		{
 			await SceneManager.LoadSceneAsync(_gameConfig.TitleSceneName);
 			_machine.TitleScreen();
