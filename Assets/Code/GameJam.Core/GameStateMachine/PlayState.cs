@@ -53,15 +53,7 @@ public class PlayState : IState
 				_gameState.PlayerDestination = hit.point;
 			}
 
-			var interactiveHit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, _gameConfig.InteractiveLayer);
-			if (interactiveHit.collider != null)
-			{
-				var itemInterface = interactiveHit.collider.GetComponent<InteractiveElementInterface>();
-				if (itemInterface != null)
-				{
-					_elementSelected = itemInterface;
-				}
-			}
+			GetClosestInteractiveElement(ray);
 		}
 
 		if (_gameState.PlayerDestination != null)
@@ -69,16 +61,7 @@ public class PlayState : IState
 			_cursor.position = _gameState.PlayerDestination.Value;
 			_player.Follow(_cursor);
 
-			if (_elementSelected != null)
-			{
-				var interactiveHit = Physics2D.Raycast(_player.transform.position, _elementSelected.position, Mathf.Infinity, _gameConfig.InteractiveLayer);
-				if (interactiveHit.collider != null && interactiveHit.distance <= _interactRange)
-				{
-					_elementSelected.Interact();
-					_elementSelected = null;
-					ClearPlayerDestination();
-				}
-			}
+			InteractWithElement();
 		}
 	}
 
@@ -90,6 +73,7 @@ public class PlayState : IState
 	private void OnDayEnded()
 	{
 		_player.transform.position = _gameState.PlayerStartPosition;
+		_gameState.PlayerActionStartTime = 0;
 		ClearPlayerDestination();
 	}
 
@@ -98,6 +82,58 @@ public class PlayState : IState
 		_gameState.PlayerDestination = null;
 		_player.Stop();
 		_cursor.position = new Vector3(999, 999, 0);
+	}
+
+	private void GetClosestInteractiveElement(Ray ray)
+	{
+		var interactiveHit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, _gameConfig.InteractiveLayer);
+		if (interactiveHit.collider != null)
+		{
+			var itemInterface = interactiveHit.collider.GetComponent<InteractiveElementInterface>();
+			if (itemInterface != null)
+			{
+				_elementSelected = itemInterface;
+			}
+		}
+	}
+
+	private void InteractWithElement()
+	{
+		if (_elementSelected == null)
+		{
+			_gameState.PlayerActionStartTime = 0;
+			return;
+		}
+
+		var interactiveHit = Physics2D.Raycast(_player.transform.position, _elementSelected.position, Mathf.Infinity, _gameConfig.InteractiveLayer);
+		if (interactiveHit.collider == null)
+		{
+			_gameState.PlayerActionStartTime = 0;
+			return;
+		}
+
+		if (interactiveHit.distance <= _interactRange)
+		{
+			if (_gameState.PlayerActionStartTime != 0)
+			{
+				UnityEngine.Debug.Log(((Time.time - _gameState.PlayerActionStartTime)/_elementSelected.DurationLength)*100 + "%");
+				if (_elementSelected.DurationLength >= Time.time - _gameState.PlayerActionStartTime)
+				{
+					return;
+				}
+
+				_elementSelected.Interact();
+				_elementSelected = null;
+				_gameState.PlayerActionStartTime = 0;
+				return;
+			}
+			_gameState.PlayerActionStartTime = Time.time;
+
+			return;
+		}
+
+		_gameState.PlayerActionStartTime = 0;
+
 	}
 
 	public class Factory : PlaceholderFactory<GameStateMachine, PlayState> { }
