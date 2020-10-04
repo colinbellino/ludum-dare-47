@@ -14,6 +14,7 @@ public class PlayState : IState
 	private Camera _camera;
 	private GameActions _actions;
 	private Transform _cursor;
+	private InteractiveElementInterface _elementSelected;
 
 	public PlayState(GameStateMachine machine, GameState gameState, GameConfig gameConfig)
 	{
@@ -49,12 +50,32 @@ public class PlayState : IState
 			{
 				_gameState.PlayerDestination = hit.point;
 			}
+
+			var interactiveHit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, _gameConfig.InteractiveLayer);
+			if (interactiveHit.collider != null)
+			{
+				var itemInterface = interactiveHit.collider.GetComponent<InteractiveElementInterface>();
+				if (itemInterface != null)
+				{
+					_elementSelected = itemInterface;
+				}
+			}
 		}
 
 		if (_gameState.PlayerDestination != null)
 		{
 			_cursor.position = _gameState.PlayerDestination.Value;
 			_player.AiDestination.target = _cursor;
+
+			if (_elementSelected != null)
+			{
+				var interactiveHit = Physics2D.Raycast(_player.transform.position, _elementSelected.position, Mathf.Infinity, _gameConfig.InteractiveLayer);
+				if (interactiveHit.collider != null && interactiveHit.distance <= 1.0f)
+				{
+					_elementSelected.Interact();
+					_elementSelected = null;
+				}
+			}
 		}
 	}
 

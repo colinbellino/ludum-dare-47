@@ -7,4 +7,5 @@ public class GameConfig : ScriptableObject
 	public string MainSceneName = "Main";
 	public string GroundTag = "Ground";
 	public LayerMask GroundLayer;
+	public LayerMask InteractiveLayer;
 }
