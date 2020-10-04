@@ -14,7 +14,7 @@ public class PlayState : IState
 	private Camera _camera;
 	private GameActions _actions;
 	private Transform _cursor;
-	private InteractiveElementInterface _elementSelected;
+	private IInteractive _elementSelected;
 
 	private const float _interactRange = 2.0f;
 
@@ -89,7 +89,7 @@ public class PlayState : IState
 		var interactiveHit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, _gameConfig.InteractiveLayer);
 		if (interactiveHit.collider != null)
 		{
-			var itemInterface = interactiveHit.collider.GetComponent<InteractiveElementInterface>();
+			var itemInterface = interactiveHit.collider.GetComponent<IInteractive>();
 			if (itemInterface != null)
 			{
 				_elementSelected = itemInterface;
@@ -116,7 +116,7 @@ public class PlayState : IState
 		{
 			if (_gameState.PlayerActionStartTime != 0)
 			{
-				UnityEngine.Debug.Log(((Time.time - _gameState.PlayerActionStartTime)/_elementSelected.DurationLength)*100 + "%");
+				UnityEngine.Debug.Log(((Time.time - _gameState.PlayerActionStartTime) / _elementSelected.DurationLength) * 100 + "%");
 				if (_elementSelected.DurationLength >= Time.time - _gameState.PlayerActionStartTime)
 				{
 					return;

@@ -11,10 +11,10 @@ public class PathfinderAutoScan : MonoBehaviour
 		GameEvents.LayoutChanged += UpdateGraph;
 	}
 
-	private void UpdateGraph(Vector3 origin)
+	private void UpdateGraph(Vector3Int origin)
 	{
 		UnityEngine.Debug.Log("UpdateGraph at " + origin);
-		_pathfinder.UpdateGraphs(new Bounds(origin, new Vector3(10f, 10f, 1f)));
+		_pathfinder.UpdateGraphs(new Bounds(origin, new Vector3Int(10, 10, 1)));
 	}
 
 	// [ContextMenu("Pouet")]
