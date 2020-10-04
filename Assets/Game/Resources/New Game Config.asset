@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleSceneName: Title
   MainSceneName: Main
+  GameOverSceneName: GameOver
   GroundTag: Ground
   GroundLayer:
     serializedVersion: 2
@@ -21,3 +22,4 @@ MonoBehaviour:
   InteractiveLayer:
     serializedVersion: 2
     m_Bits: 512
+  MaximumLoop: 2
