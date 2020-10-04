@@ -5,7 +5,8 @@ using Zenject;
 public class TimelinePanel : MonoBehaviour
 {
 	[SerializeField] private Slider _slider;
-	[SerializeField] private Transform _loopsContainer;
+	[SerializeField] private Image[] _liveImages;
+	[SerializeField] private Image[] _segmentsImages;
 
 	private GameState _state;
 	private GameConfig _gameConfig;
@@ -38,9 +39,16 @@ public class TimelinePanel : MonoBehaviour
 	{
 		var remainingLoops = _gameConfig.MaximumLoop - _state.LoopCount;
 
-		for (int i = 0; i < _loopsContainer.childCount; i++)
+		for (int i = 0; i < _liveImages.Length; i++)
 		{
-			_loopsContainer.GetChild(i).gameObject.SetActive(i < remainingLoops);
+			if (i > remainingLoops)
+			{
+				_liveImages[i].color = Color.clear;
+			}
+			else if (i == remainingLoops)
+			{
+				_liveImages[i].color = _gameConfig.Color2;
+			}
 		}
 	}
 }

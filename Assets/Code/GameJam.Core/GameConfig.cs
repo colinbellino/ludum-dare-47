@@ -12,4 +12,10 @@ public class GameConfig : ScriptableObject
 	public LayerMask InteractiveLayer;
 	public int MaximumLoop = 100;
 	public float DayDuration = 10f;
+
+	public Color Color1;
+	public Color Color2;
+	public Color Color3;
+	public Color Color4;
+	public Color Color5;
 }
