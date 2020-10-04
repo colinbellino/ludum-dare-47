@@ -27,13 +27,14 @@ public class PlayState : IState
 		_actions.Enable();
 
 		_player = Object.FindObjectOfType<PlayerTag>();
-		_gameState.TimeStart = Time.time;
 		_gameState.LoopCount = 0;
 		_gameState.PlayerDestination = null;
 		_gameState.PlayerStartPosition = _player.transform.position;
 
 		_camera = Camera.main;
 		_cursor = GameObject.Find("Cursor").transform; // TODO: Clean this
+
+		GameEvents.GameStarted?.Invoke();
 
 		GameEvents.DayEnded += OnDayEnded;
 		GameEvents.ExitReached += OnExitReached;

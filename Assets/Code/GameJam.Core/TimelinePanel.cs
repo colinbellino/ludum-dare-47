@@ -4,9 +4,8 @@ using Zenject;
 
 public class TimelinePanel : MonoBehaviour
 {
-	[SerializeField] private Slider _slider;
 	[SerializeField] private Image[] _liveImages;
-	[SerializeField] private Image[] _segmentsImages;
+	[SerializeField] private Transform[] _segmentsImages;
 
 	private GameState _state;
 	private GameConfig _gameConfig;
@@ -32,7 +31,40 @@ public class TimelinePanel : MonoBehaviour
 
 	protected void Update()
 	{
-		_slider.value = 1f - (_state.TimeEnd - Time.time) / _state.DayDuration;
+		var value = 1f - (_state.TimeEnd - Time.time) / _state.DayDuration;
+
+		// 0 -> N
+		// 1 -> E
+		// 2 -> S
+		// 3 -> W
+		if (value < 0.25f)
+		{
+			_segmentsImages[0].localScale = new Vector3(Mathf.Max(0f, (value - 0.00f) * 4), 1f, 1f);
+			_segmentsImages[1].localScale = new Vector3(0f, 1f, 1f);
+			_segmentsImages[2].localScale = new Vector3(0f, 1f, 1f);
+			_segmentsImages[3].localScale = new Vector3(0f, 1f, 1f);
+		}
+		else if (value < 0.50f)
+		{
+			_segmentsImages[0].localScale = new Vector3(1f, 1f, 1f);
+			_segmentsImages[1].localScale = new Vector3(Mathf.Max(0f, (value - 0.25f) * 4), 1f, 1f);
+			_segmentsImages[2].localScale = new Vector3(0f, 1f, 1f);
+			_segmentsImages[3].localScale = new Vector3(0f, 1f, 1f);
+		}
+		else if (value < 0.75f)
+		{
+			_segmentsImages[0].localScale = new Vector3(1f, 1f, 1f);
+			_segmentsImages[1].localScale = new Vector3(1f, 1f, 1f);
+			_segmentsImages[2].localScale = new Vector3(Mathf.Max(0f, (value - 0.50f) * 4), 1f, 1f);
+			_segmentsImages[3].localScale = new Vector3(0f, 1f, 1f);
+		}
+		else
+		{
+			_segmentsImages[0].localScale = new Vector3(1f, 1f, 1f);
+			_segmentsImages[1].localScale = new Vector3(1f, 1f, 1f);
+			_segmentsImages[2].localScale = new Vector3(1f, 1f, 1f);
+			_segmentsImages[3].localScale = new Vector3(Mathf.Max(0f, (value - 0.75f) * 4), 1f, 1f);
+		}
 	}
 
 	private void UpdateLoops()
@@ -50,5 +82,7 @@ public class TimelinePanel : MonoBehaviour
 				_liveImages[i].color = _gameConfig.Color2;
 			}
 		}
+
+		// TODO: Update text
 	}
 }

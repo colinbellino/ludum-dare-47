@@ -15,6 +15,9 @@ public class TimeLord : IInitializable, ITickable
 	public void Initialize()
 	{
 		Reset();
+
+		GameEvents.GameStarted += Reset;
+		GameEvents.DayEnded += Reset;
 	}
 
 	public void Tick()
