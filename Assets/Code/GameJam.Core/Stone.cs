@@ -10,6 +10,7 @@ public class Stone : MonoBehaviour, IInteractive
 	[SerializeField] private Slider _progressSlider;
 	[SerializeField] private AudioClip _actionStartAudioClip;
 	[SerializeField] private AudioClip _actionDoneAudioClip;
+	[SerializeField] private GameObject _onDoneParticlePrefab;
 
 	private AudioSource _audioSource;
 
@@ -48,7 +49,7 @@ public class Stone : MonoBehaviour, IInteractive
 				var destination = origin + (Vector3Int)_direction;
 				GameEvents.StonePushed?.Invoke(origin, destination);
 				PlayActionDoneSoundEffect();
-
+				InstantiateParticlePrefab();
 				_done = true;
 			}
 		}
@@ -80,5 +81,11 @@ public class Stone : MonoBehaviour, IInteractive
 	{
 		_audioSource.clip = _actionDoneAudioClip;
 		_audioSource.Play();
+	}
+
+	private void InstantiateParticlePrefab()
+	{
+		var instance = Instantiate(_onDoneParticlePrefab);
+		instance.transform.position = transform.position;
 	}
 }

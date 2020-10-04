@@ -563,6 +563,8 @@ MonoBehaviour:
     type: 3}
   _actionDoneAudioClip: {fileID: 8300000, guid: 57a10e39ba3f948f2accf0cd60fb52bf,
     type: 3}
+  _onDoneParticlePrefab: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b,
+    type: 3}
 --- !u!82 &1460291158988479921
 AudioSource:
   m_ObjectHideFlags: 0
