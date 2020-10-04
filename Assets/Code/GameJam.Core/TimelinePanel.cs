@@ -9,16 +9,18 @@ public class TimelinePanel : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI text;
 
 	private GameState _state;
+	private GameConfig _gameConfig;
 
 	[Inject]
-	public void Construct(GameState state)
+	public void Construct(GameState state, GameConfig gameConfig)
 	{
 		_state = state;
+		_gameConfig = gameConfig;
 	}
 
 	protected void Update()
 	{
 		_slider.value = 1f - (_state.TimeEnd - Time.time) / _state.DayDuration;
-		text.text = (100 - _state.LoopCount).ToString();
+		text.text = (_gameConfig.MaximumLoop - _state.LoopCount).ToString();
 	}
 }

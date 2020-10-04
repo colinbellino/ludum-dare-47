@@ -8,4 +8,5 @@ public class GameConfig : ScriptableObject
 	public string GroundTag = "Ground";
 	public LayerMask GroundLayer;
 	public LayerMask InteractiveLayer;
+	public int MaximumLoop;
 }
