@@ -16,13 +16,22 @@ public class WinState : IState
 
 	public async void Enter(object[] parameters)
 	{
-		UnityEngine.Debug.Log("win !");
+		GameEvents.BackToTitle += BackToTitle;
+
 		await SceneManager.LoadSceneAsync(_gameConfig.WinSceneName);
 	}
 
 	public void Tick() { }
 
-	public void Exit() { }
+	public void Exit()
+	{
+		GameEvents.BackToTitle -= BackToTitle;
+	}
+
+	private void BackToTitle()
+	{
+		_machine.Initialize(_gameConfig.TitleSceneName);
+	}
 
 	public class Factory : PlaceholderFactory<GameStateMachine, WinState> { }
 }

@@ -61,7 +61,7 @@ public class GameStateMachine : IInitializable, ITickable
 			Debug.LogError("Invalid state: " + state);
 		}
 
-		// Debug.Log("Enter state: " + state);
+		Debug.Log("Enter state: " + state);
 		_currentState?.Exit();
 
 		_currentState = _states[state];
