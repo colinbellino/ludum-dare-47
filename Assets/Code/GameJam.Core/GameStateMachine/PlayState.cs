@@ -41,6 +41,12 @@ public class PlayState : IState
 
 	public void Tick()
 	{
+		if (_gameState.LoopCount >= _gameConfig.MaximumLoop)
+		{
+			_machine.GameOver();
+			return;
+		}
+
 		var mousePosition = _actions.Gameplay.MousePosition.ReadValue<Vector2>();
 
 		if (_actions.Gameplay.Action1.ReadValue<float>() > 0f)
