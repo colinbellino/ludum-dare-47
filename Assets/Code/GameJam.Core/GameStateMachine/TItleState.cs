@@ -13,17 +13,35 @@ public class TitleState : IState
 		_gameConfig = gameConfig;
 	}
 
-	public void Enter(object[] parameters) { }
+	public void Enter(object[] parameters)
+	{
+		GameEvents.QuitGame += QuitGame;
+		GameEvents.StartGame += StartGame;
+	}
 
 	public void Tick()
 	{
 		if (Keyboard.current.enterKey.wasPressedThisFrame)
 		{
-			_machine.Initialize(_gameConfig.MainSceneName);
+			StartGame();
 		}
 	}
 
-	public void Exit() { }
+	public void Exit()
+	{
+		GameEvents.QuitGame -= QuitGame;
+		GameEvents.StartGame -= QuitGame;
+	}
+
+	private void StartGame()
+	{
+		_machine.Initialize(_gameConfig.MainSceneName);
+	}
+
+	private void QuitGame()
+	{
+		_machine.Quit();
+	}
 
 	public class Factory : PlaceholderFactory<GameStateMachine, TitleState> { }
 }

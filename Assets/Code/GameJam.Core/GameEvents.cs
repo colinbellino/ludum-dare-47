@@ -6,6 +6,8 @@ public static class GameEvents
 	public static Action DayEnded;
 	public static Action ExitReached;
 	public static Action BackToTitle;
+	public static Action QuitGame;
+	public static Action StartGame;
 	public static Action<Vector3Int> LayoutChanged;
 	public static Action<Vector3Int, Vector3Int> StonePushed;
 

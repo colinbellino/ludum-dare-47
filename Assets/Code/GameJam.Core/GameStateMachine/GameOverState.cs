@@ -16,13 +16,22 @@ public class GameOverState : IState
 
 	public async void Enter(object[] parameters)
 	{
-		UnityEngine.Debug.Log("game over");
+		GameEvents.BackToTitle += BackToTitle;
 		await SceneManager.LoadSceneAsync(_gameConfig.GameOverSceneName);
 	}
 
 	public void Tick() { }
 
-	public void Exit() { }
+	public void Exit()
+	{
+		GameEvents.BackToTitle -= BackToTitle;
+	}
+
+
+	private void BackToTitle()
+	{
+		_machine.Initialize(_gameConfig.TitleSceneName);
+	}
 
 	public class Factory : PlaceholderFactory<GameStateMachine, GameOverState> { }
 }
