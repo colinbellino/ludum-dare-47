@@ -16,6 +16,6 @@ public class TimelinePanel : MonoBehaviour
 
 	protected void Update()
 	{
-		_slider.value = 1 - (_state.TimeEnd - _state.TimeCurrent) / _state.DayDuration;
+		_slider.value = 1f - (_state.TimeEnd - Time.time) / _state.DayDuration;
 	}
 }

@@ -10,6 +10,7 @@ public class PlayState : IState
 	private readonly GameState _gameState;
 	private readonly GameConfig _gameConfig;
 
+	private PlayerTag _player;
 	private Camera _camera;
 	private GameActions _actions;
 	private Transform _cursor;
@@ -25,6 +26,9 @@ public class PlayState : IState
 	{
 		_actions = new GameActions();
 		_actions.Enable();
+
+		_player = GameObject.FindObjectOfType<PlayerTag>();
+		_gameState.PlayerStartPosition = _player.transform.position;
 
 		_camera = Camera.main;
 		_cursor = GameObject.Find("Cursor").transform; // TODO: Clean this
@@ -58,9 +62,12 @@ public class PlayState : IState
 		GameEvents.DayEnded -= OnDayEnded;
 	}
 
-	private async void OnDayEnded()
+	private void OnDayEnded() => ResetPlayer();
+
+	private void ResetPlayer()
 	{
-		// await SceneManager.LoadSceneAsync(_gameConfig.MainSceneName);
+		_player.transform.position = _gameState.PlayerStartPosition;
+		_gameState.PlayerDestination = null;
 	}
 
 	public class Factory : PlaceholderFactory<GameStateMachine, PlayState> { }

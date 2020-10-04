@@ -14,35 +14,23 @@ public class TimeLord : IInitializable, ITickable
 	public void Initialize()
 	{
 		Reset();
-
-		GameEvents.DayEnded += OnDayEnded;
 	}
 
 	public void Tick()
 	{
-		if (_isDayOver)
+		if (Time.time >= _state.TimeEnd)
 		{
-			return;
-		}
+			_state.LoopCount += 1;
 
-		_state.TimeCurrent = Time.time - _state.TimeStart;
-
-		if (_state.TimeCurrent >= _state.TimeEnd)
-		{
-			_isDayOver = true;
+			Reset();
 			GameEvents.DayEnded?.Invoke();
 			UnityEngine.Debug.Log("Day over !");
 		}
 	}
 
-	private void OnDayEnded()
-	{
-		Reset();
-	}
-
 	private void Reset()
 	{
-		_state.DayDuration = 10f;
+		_state.DayDuration = 5f;
 		_state.TimeStart = Time.time;
 		_state.TimeEnd = _state.TimeStart + _state.DayDuration;
 	}
