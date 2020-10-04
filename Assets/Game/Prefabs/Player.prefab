@@ -209,6 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _clickAudioClip: {fileID: 8300000, guid: 08c2afcca25f9d646ac16428cdeee44c, type: 3}
+  _deathAudioClip: {fileID: 8300000, guid: 55c70c6049bed3f4690abe8fec67f459, type: 3}
 --- !u!82 &8472769294888720114
 AudioSource:
   m_ObjectHideFlags: 0

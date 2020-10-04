@@ -54,15 +54,21 @@ public class PlayerTag : MonoBehaviour
 
 		if (_interactingWith != null)
 		{
-			_interactingWith.CancelInteract();
+			CancelInteract();
 		}
 
 		_interactingWith = _target;
 		_interactingWith.Interact();
 	}
 
+	public void CancelInteract()
+	{
+		_interactingWith.CancelInteract();
+	}
+
 	public void Reset()
 	{
+		CancelInteract();
 		_interactingWith = null;
 		_target = null;
 		PlayDeathSoundEffect();
