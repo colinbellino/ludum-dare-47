@@ -37,7 +37,7 @@ public class TimelinePanel : MonoBehaviour
 
 	private void UpdateLoops()
 	{
-		var remainingLoops = _gameConfig.MaximumLoop - _state.LoopCount;
+		var remainingLoops = (_gameConfig.MaximumLoop - _state.LoopCount) - 1;
 
 		for (int i = 0; i < _liveImages.Length; i++)
 		{
