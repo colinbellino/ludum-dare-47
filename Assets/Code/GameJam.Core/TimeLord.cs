@@ -30,7 +30,7 @@ public class TimeLord : IInitializable, ITickable
 
 	private void Reset()
 	{
-		_state.DayDuration = 5f;
+		_state.DayDuration = 10f;
 		_state.TimeStart = Time.time;
 		_state.TimeEnd = _state.TimeStart + _state.DayDuration;
 	}

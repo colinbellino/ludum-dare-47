@@ -27,7 +27,7 @@ public class PlayState : IState
 		_actions = new GameActions();
 		_actions.Enable();
 
-		_player = GameObject.FindObjectOfType<PlayerTag>();
+		_player = Object.FindObjectOfType<PlayerTag>();
 		_gameState.PlayerStartPosition = _player.transform.position;
 
 		_camera = Camera.main;
@@ -53,7 +53,8 @@ public class PlayState : IState
 
 		if (_gameState.PlayerDestination != null)
 		{
-			_cursor.transform.position = _gameState.PlayerDestination.Value;
+			_cursor.position = _gameState.PlayerDestination.Value;
+			_player.AiDestination.target = _cursor;
 		}
 	}
 
@@ -67,6 +68,7 @@ public class PlayState : IState
 	private void ResetPlayer()
 	{
 		_player.transform.position = _gameState.PlayerStartPosition;
+		_player.AiDestination.target = null;
 		_gameState.PlayerDestination = null;
 	}
 
