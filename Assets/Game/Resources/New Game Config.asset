@@ -22,4 +22,5 @@ MonoBehaviour:
   InteractiveLayer:
     serializedVersion: 2
     m_Bits: 512
-  MaximumLoop: 3
+  MaximumLoop: 100
+  DayDuration: 20

@@ -38,6 +38,7 @@ public class PlayState : IState
 		_cursor = GameObject.Find("Cursor").transform; // TODO: Clean this
 
 		GameEvents.DayEnded += OnDayEnded;
+		GameEvents.ExitReached += OnExitReached;
 	}
 
 	public void Tick()
@@ -97,6 +98,7 @@ public class PlayState : IState
 	public void Exit()
 	{
 		GameEvents.DayEnded -= OnDayEnded;
+		GameEvents.ExitReached -= OnExitReached;
 	}
 
 	private void OnDayEnded()
@@ -104,6 +106,12 @@ public class PlayState : IState
 		_player.transform.position = _gameState.PlayerStartPosition;
 		_player.Reset();
 		ClearPlayerDestination();
+	}
+
+	private void OnExitReached()
+	{
+		// TODO: Differentiate lose / victory
+		_machine.GameOver();
 	}
 
 	private void ClearPlayerDestination()

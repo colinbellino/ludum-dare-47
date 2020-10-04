@@ -3,12 +3,13 @@ using Zenject;
 
 public class TimeLord : IInitializable, ITickable
 {
-	private bool _isDayOver;
-	private GameState _state;
+	private readonly GameState _state;
+	private readonly GameConfig _gameConfig;
 
-	public TimeLord(GameState state)
+	public TimeLord(GameState state, GameConfig gameConfig)
 	{
 		_state = state;
+		_gameConfig = gameConfig;
 	}
 
 	public void Initialize()
@@ -30,7 +31,7 @@ public class TimeLord : IInitializable, ITickable
 
 	private void Reset()
 	{
-		_state.DayDuration = 10f;
+		_state.DayDuration = _gameConfig.DayDuration;
 		_state.TimeStart = Time.time;
 		_state.TimeEnd = _state.TimeStart + _state.DayDuration;
 	}
