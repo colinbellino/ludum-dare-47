@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Zenject;
 
@@ -14,9 +15,6 @@ public class PlayState : IState
 	private Camera _camera;
 	private GameActions _actions;
 	private Transform _cursor;
-	private IInteractive _elementSelected;
-
-	private const float _interactRange = 2.0f;
 
 	public PlayState(GameStateMachine machine, GameState gameState, GameConfig gameConfig)
 	{
@@ -31,6 +29,11 @@ public class PlayState : IState
 		_actions.Enable();
 
 		_player = Object.FindObjectOfType<PlayerTag>();
+		_gameState.TimeStart = 0;
+		_gameState.TimeEnd = 0;
+		_gameState.DayDuration = 0;
+		_gameState.LoopCount = 0;
+		_gameState.PlayerDestination = null;
 		_gameState.PlayerStartPosition = _player.transform.position;
 
 		_camera = Camera.main;
@@ -48,26 +51,48 @@ public class PlayState : IState
 		}
 
 		var mousePosition = _actions.Gameplay.MousePosition.ReadValue<Vector2>();
+		var action1wasReleased = _actions.Gameplay.Action1.ReadValue<float>() > 0f;
 
-		if (_actions.Gameplay.Action1.ReadValue<float>() > 0f)
+		if (Keyboard.current.rKey.wasPressedThisFrame)
 		{
-			var ray = _camera.ScreenPointToRay(mousePosition);
-			Debug.DrawRay(ray.origin, ray.direction * 999f, Color.red);
-			var hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, _gameConfig.GroundLayer);
-			if (hit.collider != null)
-			{
-				_gameState.PlayerDestination = hit.point;
-			}
-
-			GetClosestInteractiveElement(ray);
+			UnityEngine.Debug.Log("Restarting...");
+			_machine.Initialize();
+			return;
 		}
 
-		if (_gameState.PlayerDestination != null)
+		if (action1wasReleased)
 		{
-			_cursor.position = _gameState.PlayerDestination.Value;
-			_player.Follow(_cursor);
+			var ray = _camera.ScreenPointToRay(mousePosition);
+			Debug.DrawRay(ray.origin, ray.direction * 999f, Color.red, 1f);
+			var hits = Physics2D.RaycastAll(ray.origin, ray.direction, Mathf.Infinity, _gameConfig.GroundLayer | _gameConfig.InteractiveLayer);
+			foreach (var hit in hits)
+			{
+				if (hit.collider != null)
+				{
+					_gameState.PlayerDestination = hit.point;
 
-			InteractWithElement();
+					var interactive = hit.collider.GetComponent<IInteractive>();
+					if (interactive != null)
+					{
+						_player.SetTarget(interactive);
+					}
+				}
+			}
+		}
+
+		if (_player.IsTargetInRange())
+		{
+			ClearPlayerDestination();
+			_player.Interact();
+		}
+		else
+		{
+
+			if (_gameState.PlayerDestination != null)
+			{
+				_cursor.position = _gameState.PlayerDestination.Value;
+				_player.Follow(_cursor);
+			}
 		}
 	}
 
@@ -79,67 +104,15 @@ public class PlayState : IState
 	private void OnDayEnded()
 	{
 		_player.transform.position = _gameState.PlayerStartPosition;
-		_gameState.PlayerActionStartTime = 0;
+		_player.Reset();
 		ClearPlayerDestination();
 	}
 
 	private void ClearPlayerDestination()
 	{
 		_gameState.PlayerDestination = null;
-		_player.Stop();
+		_player.StopFollowing();
 		_cursor.position = new Vector3(999, 999, 0);
-	}
-
-	private void GetClosestInteractiveElement(Ray ray)
-	{
-		var interactiveHit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, _gameConfig.InteractiveLayer);
-		if (interactiveHit.collider != null)
-		{
-			var itemInterface = interactiveHit.collider.GetComponent<IInteractive>();
-			if (itemInterface != null)
-			{
-				_elementSelected = itemInterface;
-			}
-		}
-	}
-
-	private void InteractWithElement()
-	{
-		if (_elementSelected == null)
-		{
-			_gameState.PlayerActionStartTime = 0;
-			return;
-		}
-
-		var interactiveHit = Physics2D.Raycast(_player.transform.position, _elementSelected.position, Mathf.Infinity, _gameConfig.InteractiveLayer);
-		if (interactiveHit.collider == null)
-		{
-			_gameState.PlayerActionStartTime = 0;
-			return;
-		}
-
-		if (interactiveHit.distance <= _interactRange)
-		{
-			if (_gameState.PlayerActionStartTime != 0)
-			{
-				UnityEngine.Debug.Log(((Time.time - _gameState.PlayerActionStartTime) / _elementSelected.DurationLength) * 100 + "%");
-				if (_elementSelected.DurationLength >= Time.time - _gameState.PlayerActionStartTime)
-				{
-					return;
-				}
-
-				_elementSelected.Interact();
-				_elementSelected = null;
-				_gameState.PlayerActionStartTime = 0;
-				return;
-			}
-			_gameState.PlayerActionStartTime = Time.time;
-
-			return;
-		}
-
-		_gameState.PlayerActionStartTime = 0;
-
 	}
 
 	public class Factory : PlaceholderFactory<GameStateMachine, PlayState> { }

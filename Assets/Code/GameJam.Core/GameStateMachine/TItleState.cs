@@ -1,5 +1,5 @@
-using Cysharp.Threading.Tasks;
-using UnityEngine.SceneManagement;
+
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class TitleState : IState
@@ -14,12 +14,15 @@ public class TitleState : IState
 		_gameConfig = gameConfig;
 	}
 
-	public async void Enter(object[] parameters)
-	{
-		await SceneManager.LoadSceneAsync(_gameConfig.TitleSceneName);
-	}
+	public void Enter(object[] parameters) { }
 
-	public void Tick() { }
+	public void Tick()
+	{
+		if (Keyboard.current.enterKey.wasPressedThisFrame)
+		{
+			_machine.Initialize(_gameConfig.MainSceneName);
+		}
+	}
 
 	public void Exit() { }
 

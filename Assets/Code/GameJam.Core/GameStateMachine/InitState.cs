@@ -1,5 +1,6 @@
 using UnityEngine.SceneManagement;
 using Zenject;
+using Cysharp.Threading.Tasks;
 
 public class InitState : IState
 {
@@ -12,14 +13,24 @@ public class InitState : IState
 		_gameConfig = gameConfig;
 	}
 
-	public void Enter(object[] parameters)
+	public async void Enter(object[] parameters)
 	{
+		if (parameters?.Length > 0)
+		{
+			await SceneManager.LoadSceneAsync((string)parameters[0]);
+			_machine.Play();
+
+			return;
+		}
+
 		if (SceneManager.GetActiveScene().name == _gameConfig.TitleSceneName)
 		{
+			await SceneManager.LoadSceneAsync(_gameConfig.TitleSceneName);
 			_machine.TitleScreen();
 		}
 		else
 		{
+			await SceneManager.LoadSceneAsync(_gameConfig.MainSceneName);
 			_machine.Play();
 		}
 	}

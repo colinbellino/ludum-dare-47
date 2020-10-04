@@ -15,7 +15,6 @@ public class TilemapManager : MonoBehaviour
 	private async void OnStonePushed(Vector3Int origin, Vector3Int destination)
 	{
 		_waterTilemap.SetTile(destination, null);
-		UnityEngine.Debug.Log(" ??");
 
 		await UniTask.NextFrame();
 

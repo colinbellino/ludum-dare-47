@@ -32,6 +32,8 @@ public class GameStateMachine : IInitializable, ITickable
 		ChangeState(GameStates.Init);
 	}
 
+	public void Initialize(string levelName) => ChangeState(GameStates.Init, new object[] { levelName });
+
 	public void Tick() => _currentState?.Tick();
 
 	public void TitleScreen() => ChangeState(GameStates.Title);

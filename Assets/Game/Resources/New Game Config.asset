@@ -22,4 +22,4 @@ MonoBehaviour:
   InteractiveLayer:
     serializedVersion: 2
     m_Bits: 512
-  MaximumLoop: 2
+  MaximumLoop: 3
