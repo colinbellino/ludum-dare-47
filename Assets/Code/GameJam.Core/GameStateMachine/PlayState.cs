@@ -26,7 +26,7 @@ public class PlayState : IState
 		_actions.Enable();
 
 		_player = Object.FindObjectOfType<PlayerTag>();
-		_gameState.TimeStart = 0;
+		_gameState.TimeStart = Time.time;
 		_gameState.LoopCount = 0;
 		_gameState.PlayerDestination = null;
 		_gameState.PlayerStartPosition = _player.transform.position;

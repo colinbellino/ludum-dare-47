@@ -15,6 +15,7 @@ MonoBehaviour:
   TitleSceneName: Title
   MainSceneName: Main
   GameOverSceneName: GameOver
+  WinSceneName: Win
   GroundTag: Ground
   GroundLayer:
     serializedVersion: 2

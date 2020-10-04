@@ -11,5 +11,5 @@ public class GameConfig : ScriptableObject
 	public LayerMask GroundLayer;
 	public LayerMask InteractiveLayer;
 	public int MaximumLoop = 100;
-	public int DayDuration = 10;
+	public float DayDuration = 10f;
 }
