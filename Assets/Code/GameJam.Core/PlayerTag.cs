@@ -7,6 +7,8 @@ public class PlayerTag : MonoBehaviour
 	private AIPath _aiPath;
 	private IInteractive _interactingWith;
 	private IInteractive _target;
+	private AudioSource _audioSource;
+	[SerializeField] private AudioClip _clickAudioClip;
 
 	private const float _interactRange = 1.5f;
 
@@ -14,6 +16,7 @@ public class PlayerTag : MonoBehaviour
 	{
 		_aiDestination = GetComponent<AIDestinationSetter>();
 		_aiPath = GetComponent<AIPath>();
+		_audioSource = GetComponent<AudioSource>();
 	}
 
 	public void Follow(Transform target)
@@ -61,5 +64,11 @@ public class PlayerTag : MonoBehaviour
 	{
 		_interactingWith = null;
 		_target = null;
+	}
+
+	public void PlayClickSoundEffect()
+	{
+		_audioSource.clip = _clickAudioClip;
+		_audioSource.Play();
 	}
 }

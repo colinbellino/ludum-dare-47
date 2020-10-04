@@ -12,6 +12,7 @@ public class PlayState : IState
 	private Camera _camera;
 	private GameActions _actions;
 	private Transform _cursor;
+	private bool _clickSoundWasPlay;
 
 	public PlayState(GameStateMachine machine, GameState gameState, GameConfig gameConfig)
 	{
@@ -64,6 +65,12 @@ public class PlayState : IState
 
 		if (action1wasReleased)
 		{
+			if (!_clickSoundWasPlay)
+			{
+				_player.PlayClickSoundEffect();
+				_clickSoundWasPlay = true;
+			}
+
 			var ray = _camera.ScreenPointToRay(mousePosition);
 			Debug.DrawRay(ray.origin, ray.direction * 999f, Color.red, 1f);
 			var hits = Physics2D.RaycastAll(ray.origin, ray.direction, Mathf.Infinity, _gameConfig.GroundLayer | _gameConfig.InteractiveLayer);
@@ -80,6 +87,10 @@ public class PlayState : IState
 					}
 				}
 			}
+		}
+		else
+		{
+			_clickSoundWasPlay = false;
 		}
 
 		if (_player.IsTargetInRange())
