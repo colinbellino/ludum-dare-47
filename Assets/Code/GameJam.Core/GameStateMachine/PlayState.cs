@@ -30,8 +30,6 @@ public class PlayState : IState
 
 		_player = Object.FindObjectOfType<PlayerTag>();
 		_gameState.TimeStart = 0;
-		_gameState.TimeEnd = 0;
-		_gameState.DayDuration = 0;
 		_gameState.LoopCount = 0;
 		_gameState.PlayerDestination = null;
 		_gameState.PlayerStartPosition = _player.transform.position;

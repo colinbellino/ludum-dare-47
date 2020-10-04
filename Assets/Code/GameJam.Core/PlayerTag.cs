@@ -45,7 +45,6 @@ public class PlayerTag : MonoBehaviour
 	{
 		if (_interactingWith == _target)
 		{
-			UnityEngine.Debug.Log("?");
 			return;
 		}
 

@@ -12,6 +12,11 @@ public class TilemapManager : MonoBehaviour
 		GameEvents.StonePushed += OnStonePushed;
 	}
 
+	protected void Destroy()
+	{
+		GameEvents.StonePushed -= OnStonePushed;
+	}
+
 	private async void OnStonePushed(Vector3Int origin, Vector3Int destination)
 	{
 		_waterTilemap.SetTile(destination, null);

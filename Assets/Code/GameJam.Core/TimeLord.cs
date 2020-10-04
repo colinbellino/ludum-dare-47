@@ -18,7 +18,7 @@ public class TimeLord : IInitializable, ITickable
 
 	public void Tick()
 	{
-		if (Time.time >= _state.TimeEnd)
+		if (Time.time > _state.TimeEnd)
 		{
 			_state.LoopCount += 1;
 
