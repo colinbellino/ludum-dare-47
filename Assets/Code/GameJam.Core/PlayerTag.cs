@@ -9,6 +9,7 @@ public class PlayerTag : MonoBehaviour
 	private IInteractive _target;
 	private AudioSource _audioSource;
 	[SerializeField] private AudioClip _clickAudioClip;
+	[SerializeField] private AudioClip _deathAudioClip;
 
 	private const float _interactRange = 1.5f;
 
@@ -64,11 +65,18 @@ public class PlayerTag : MonoBehaviour
 	{
 		_interactingWith = null;
 		_target = null;
+		PlayDeathSoundEffect();
 	}
 
 	public void PlayClickSoundEffect()
 	{
 		_audioSource.clip = _clickAudioClip;
+		_audioSource.Play();
+	}
+
+	public void PlayDeathSoundEffect()
+	{
+		_audioSource.clip = _deathAudioClip;
 		_audioSource.Play();
 	}
 }

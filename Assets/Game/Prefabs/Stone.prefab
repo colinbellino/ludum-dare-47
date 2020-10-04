@@ -559,9 +559,9 @@ MonoBehaviour:
   _direction: {x: 0, y: 1}
   _blockingCollider: {fileID: 7205211658266528219}
   _progressSlider: {fileID: 927135878}
-  _actionStartAudioClip: {fileID: 8300000, guid: 55c70c6049bed3f4690abe8fec67f459,
+  _actionStartAudioClip: {fileID: 8300000, guid: 082a48e70ad064dcbb860d493d5a1f20,
     type: 3}
-  _actionDoneAudioClip: {fileID: 8300000, guid: 9cb65eb2505fbf443ac876ba177374f9,
+  _actionDoneAudioClip: {fileID: 8300000, guid: 57a10e39ba3f948f2accf0cd60fb52bf,
     type: 3}
 --- !u!82 &1460291158988479921
 AudioSource:
