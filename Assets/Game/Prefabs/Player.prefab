@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingOrder: 99
   m_Sprite: {fileID: -2311659948842064771, guid: cabf4983b2802e94f9097a1e5ef80221,
     type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.08627451, g: 0.8352941, b: 0.8666667, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -131,8 +131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  drawGizmos: 0
-  detailedGizmos: 0
+  drawGizmos: 1
+  detailedGizmos: 1
   startEndModifier:
     addPoints: 0
     exactStartPoint: 3
@@ -164,7 +164,7 @@ MonoBehaviour:
   repathRate: 0.01
   canSearch: 1
   canMove: 1
-  maxSpeed: 1
+  maxSpeed: 2
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
     serializedVersion: 2
@@ -175,7 +175,7 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 0
+  slowdownDistance: 0.5
   pickNextWaypointDist: 5
   endReachedDistance: 0.2
   alwaysDrawGizmos: 1
