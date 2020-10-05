@@ -81,6 +81,35 @@ public abstract class BaseInteractive : MonoBehaviour, IInteractive
 		}
 	}
 
+	protected void MinuteurUpdate()
+	{
+		_progressSlider.gameObject.SetActive(_done == false && _inProgress);
+
+		if (_done)
+		{
+			return;
+		}
+
+		if (_inProgress)
+		{
+			_remaining -= Time.deltaTime;
+			_progressSlider.value = 1f - _remaining / _duration;
+
+			if (!_paused)
+			{
+				GameEvents.InterationFinished?.Invoke(this);
+				if (_remaining <= 0f)
+				{
+					_done = true;
+					PlayActionDoneSoundEffect();
+					InstantiateParticlePrefab();
+					OnInteractDone();
+				}
+				_paused = true;
+			}
+		}
+	}
+
 	private void PlayActionSoundEffect()
 	{
 		if (_actionStartAudioClip == null)
