@@ -81,7 +81,11 @@ public class PlayState : IState
 			{
 				if (hit.collider != null)
 				{
-					_gameState.PlayerDestination = hit.point;
+					_gameState.PlayerDestination = new Vector3(
+						Mathf.Round(hit.point.x),
+						Mathf.Round(hit.point.y)
+					);
+					_player.Follow(_cursor);
 
 					var interactive = hit.collider.GetComponent<IInteractive>();
 					if (interactive != null)
@@ -103,11 +107,9 @@ public class PlayState : IState
 		}
 		else
 		{
-
 			if (_gameState.PlayerDestination != null)
 			{
 				_cursor.position = _gameState.PlayerDestination.Value;
-				_player.Follow(_cursor);
 			}
 		}
 	}

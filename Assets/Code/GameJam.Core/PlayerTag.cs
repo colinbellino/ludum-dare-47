@@ -4,32 +4,33 @@ using UnityEngine;
 public class PlayerTag : MonoBehaviour
 {
 	private AIDestinationSetter _aiDestination;
-	private AIPath _aiPath;
+	private AILerp _ai;
 	private IInteractive _interactingWith;
 	private IInteractive _target;
 	private AudioSource _audioSource;
 	[SerializeField] private AudioClip _clickAudioClip;
 	[SerializeField] private AudioClip _deathAudioClip;
 
-	private const float _interactRange = 1.5f;
+	private const float _interactRange = 1f;
 
 	protected void Awake()
 	{
 		_aiDestination = GetComponent<AIDestinationSetter>();
-		_aiPath = GetComponent<AIPath>();
+		_ai = GetComponent<AILerp>();
 		_audioSource = GetComponent<AudioSource>();
 		GameEvents.StonePushed += OnActionDone;
 	}
 
 	public void Follow(Transform target)
 	{
-		_aiPath.isStopped = false;
+		_ai.isStopped = false;
 		_aiDestination.target = target;
+		_ai.SearchPath();
 	}
 
 	public void StopFollowing()
 	{
-		_aiPath.isStopped = true;
+		_ai.isStopped = true;
 		_aiDestination.target = null;
 	}
 
