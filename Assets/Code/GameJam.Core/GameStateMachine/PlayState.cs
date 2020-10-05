@@ -44,6 +44,7 @@ public class PlayState : IState
 		GameEvents.DayEnded += OnDayEnded;
 		GameEvents.ExitReached += OnExitReached;
 		GameEvents.InterationFinished += OnInterationFinished;
+		_isFirstLoopClick = false;
 	}
 
 	public void Tick()

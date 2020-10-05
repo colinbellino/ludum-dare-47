@@ -15,10 +15,6 @@ public class TimeLord : IInitializable, ITickable
 
 	public void Initialize()
 	{
-		// Reset();
-
-		// GameEvents.GameStarted += Reset;
-		GameEvents.DayEnded += Reset;
 		GameEvents.FirstLoopAction += StartLoop;
 	}
 
@@ -30,8 +26,8 @@ public class TimeLord : IInitializable, ITickable
 			{
 				_state.LoopCount += 1;
 
-				Reset();
 				GameEvents.DayEnded?.Invoke();
+				_isRunning = false;
 				UnityEngine.Debug.Log("Day over !");
 			}
 		}
