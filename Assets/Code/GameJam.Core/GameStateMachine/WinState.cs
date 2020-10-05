@@ -24,16 +24,9 @@ public class WinState : IState
 
 		await SceneManager.LoadSceneAsync(_gameConfig.WinSceneName);
 
-		var startImage = GameObject.Find("Press Start").GetComponent<Image>();
-		startImage.color = Color.clear;
+		await UniTask.Delay(10000);
 
-		await UniTask.Delay(1000);
-
-		await startImage.DOColor(Color.white, duration: 1f).AsyncWaitForCompletion();
-
-		await UniTask.Delay(4000);
-
-		startImage.DOColor(_gameConfig.Color4, duration: 1f).SetLoops(50, LoopType.Yoyo);
+		_machine.Initialize(_gameConfig.TitleSceneName);
 	}
 
 	public void Tick()

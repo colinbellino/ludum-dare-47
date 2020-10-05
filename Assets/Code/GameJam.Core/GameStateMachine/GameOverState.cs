@@ -1,5 +1,9 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Zenject;
 
 public class GameOverState : IState
@@ -17,10 +21,25 @@ public class GameOverState : IState
 	public async void Enter(object[] parameters)
 	{
 		GameEvents.BackToTitle += BackToTitle;
+
 		await SceneManager.LoadSceneAsync(_gameConfig.GameOverSceneName);
+
+		await UniTask.Delay(10000);
+
+		_machine.Initialize(_gameConfig.TitleSceneName);
 	}
 
-	public void Tick() { }
+	public void Tick()
+	{
+		if (Mouse.current.leftButton.wasPressedThisFrame)
+		{
+			_machine.Initialize(_gameConfig.TitleSceneName);
+		}
+		else if (Keyboard.current.anyKey.wasPressedThisFrame)
+		{
+			_machine.Initialize(_gameConfig.TitleSceneName);
+		}
+	}
 
 	public void Exit()
 	{
