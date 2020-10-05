@@ -19,6 +19,7 @@ public abstract class BaseInteractive : MonoBehaviour, IInteractive
 	protected float _remaining;
 	protected bool _paused;
 	protected Vector3Int _gridPosition;
+	protected bool _timed;
 
 	protected void Awake()
 	{
@@ -44,7 +45,10 @@ public abstract class BaseInteractive : MonoBehaviour, IInteractive
 
 	public void CancelInteract()
 	{
-		_paused = true;
+		if (_timed == false)
+		{
+			_paused = true;
+		}
 	}
 
 	protected void BaseUpdate()
@@ -95,17 +99,18 @@ public abstract class BaseInteractive : MonoBehaviour, IInteractive
 			_remaining -= Time.deltaTime;
 			_progressSlider.value = 1f - _remaining / _duration;
 
-			if (!_paused)
+			if (_paused == false)
 			{
 				GameEvents.InterationFinished?.Invoke(this);
-				if (_remaining <= 0f)
-				{
-					_done = true;
-					PlayActionDoneSoundEffect();
-					InstantiateParticlePrefab();
-					OnInteractDone();
-				}
 				_paused = true;
+			}
+
+			if (_remaining <= 0f)
+			{
+				_done = true;
+				PlayActionDoneSoundEffect();
+				InstantiateParticlePrefab();
+				OnInteractDone();
 			}
 		}
 	}

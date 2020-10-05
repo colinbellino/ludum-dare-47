@@ -46,7 +46,6 @@ public class GameOverState : IState
 		GameEvents.BackToTitle -= BackToTitle;
 	}
 
-
 	private void BackToTitle()
 	{
 		_machine.Initialize(_gameConfig.TitleSceneName);
