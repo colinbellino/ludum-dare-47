@@ -16437,12 +16437,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!4 &608786447 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7918798315566705001, guid: 10237e9a9ef6e4345bb396fd887c2f7e,
-    type: 3}
-  m_PrefabInstance: {fileID: 7918798316032880998}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &740278017
 GameObject:
   m_ObjectHideFlags: 0
@@ -24845,11 +24839,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6499515091883838749, guid: ec7433a754fd4b14d9fbb67ec6bcd388,
-        type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 608786447}
     - target: {fileID: 6499515091883838752, guid: ec7433a754fd4b14d9fbb67ec6bcd388,
         type: 3}
       propertyPath: m_Name

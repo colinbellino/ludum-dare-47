@@ -35,6 +35,8 @@ public class PlayState : IState
 		_camera = Camera.main;
 		_cursor = GameObject.Find("Cursor").transform; // TODO: Clean this
 
+		ClearPlayerDestination();
+
 		GameEvents.GameStarted?.Invoke();
 
 		GameEvents.DayEnded += OnDayEnded;
@@ -100,7 +102,7 @@ public class PlayState : IState
 			_clickSoundWasPlay = false;
 		}
 
-		if (_player.IsTargetInRange())
+		if (_player.CanInteractWithTarget())
 		{
 			ClearPlayerDestination();
 			_player.Interact();
@@ -122,8 +124,8 @@ public class PlayState : IState
 
 	private void OnDayEnded()
 	{
-		_player.Reset();
 		ClearPlayerDestination();
+		_player.Reset(_gameState.PlayerStartPosition);
 	}
 
 	private void OnExitReached()

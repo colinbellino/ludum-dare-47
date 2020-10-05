@@ -11,7 +11,7 @@ public class PlayerTag : MonoBehaviour
 	[SerializeField] private AudioClip _clickAudioClip;
 	[SerializeField] private AudioClip _deathAudioClip;
 
-	private const float _interactRange = 1f;
+	private const float _interactRange = 1.00001f;
 
 	protected void Awake()
 	{
@@ -36,13 +36,13 @@ public class PlayerTag : MonoBehaviour
 
 	public void SetTarget(IInteractive target)
 	{
-		// UnityEngine.Debug.Log("-> " + target.Transform.name);
+		UnityEngine.Debug.Log("Target -> " + target?.Transform.name);
 		_target = target;
 	}
 
 	public bool IsInteracting => _interactingWith != null;
 
-	public bool IsTargetInRange()
+	public bool CanInteractWithTarget()
 	{
 		return _target != null && Vector3.Distance(_target.Transform.position, transform.position) <= _interactRange;
 	}
@@ -68,11 +68,12 @@ public class PlayerTag : MonoBehaviour
 		}
 	}
 
-	public void Reset()
+	public void Reset(Vector3 position)
 	{
 		CancelInteract();
 		_interactingWith = null;
 		_target = null;
+		_ai.Teleport(position, true);
 		PlayDeathSoundEffect();
 	}
 
