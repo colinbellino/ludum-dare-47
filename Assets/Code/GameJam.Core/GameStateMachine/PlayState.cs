@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -48,9 +49,6 @@ public class PlayState : IState
 			return;
 		}
 
-		var mousePosition = _actions.Gameplay.MousePosition.ReadValue<Vector2>();
-		var action1wasReleased = _actions.Gameplay.Action1.ReadValue<float>() > 0f;
-
 		if (Keyboard.current.escapeKey.wasPressedThisFrame)
 		{
 			_machine.Initialize(_gameConfig.TitleSceneName);
@@ -66,6 +64,7 @@ public class PlayState : IState
 		}
 #endif
 
+		var action1wasReleased = _actions.Gameplay.Action1.ReadValue<float>() > 0f;
 		if (action1wasReleased)
 		{
 			if (!_clickSoundWasPlay)
@@ -74,6 +73,7 @@ public class PlayState : IState
 				_clickSoundWasPlay = true;
 			}
 
+			var mousePosition = _actions.Gameplay.MousePosition.ReadValue<Vector2>();
 			var ray = _camera.ScreenPointToRay(mousePosition);
 			Debug.DrawRay(ray.origin, ray.direction * 999f, Color.red, 1f);
 			var hits = Physics2D.RaycastAll(ray.origin, ray.direction, Mathf.Infinity, _gameConfig.GroundLayer | _gameConfig.InteractiveLayer);
@@ -122,14 +122,12 @@ public class PlayState : IState
 
 	private void OnDayEnded()
 	{
-		_player.transform.position = _gameState.PlayerStartPosition;
 		_player.Reset();
 		ClearPlayerDestination();
 	}
 
 	private void OnExitReached()
 	{
-		// TODO: Differentiate lose / victory
 		_machine.Win();
 	}
 

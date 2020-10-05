@@ -79,7 +79,7 @@ public class TimelinePanel : MonoBehaviour
 			}
 			else if (i == remainingLoops)
 			{
-				_liveImages[i].color = _gameConfig.Color2;
+				_liveImages[i].color = _gameConfig.Color4;
 			}
 		}
 
