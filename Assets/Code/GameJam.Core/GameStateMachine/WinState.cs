@@ -40,11 +40,11 @@ public class WinState : IState
 	{
 		if (Mouse.current.leftButton.wasPressedThisFrame)
 		{
-			_machine.TitleScreen();
+			_machine.Initialize(_gameConfig.TitleSceneName);
 		}
 		else if (Keyboard.current.anyKey.wasPressedThisFrame)
 		{
-			_machine.TitleScreen();
+			_machine.Initialize(_gameConfig.TitleSceneName);
 		}
 	}
 	public void Exit()
