@@ -9,6 +9,7 @@ public class TimelinePanel : MonoBehaviour
 
 	private GameState _state;
 	private GameConfig _gameConfig;
+	private bool _canUpdateComponent;
 
 	[Inject]
 	public void Construct(GameState state, GameConfig gameConfig)
@@ -22,15 +23,21 @@ public class TimelinePanel : MonoBehaviour
 		UpdateLoops();
 
 		GameEvents.DayEnded += UpdateLoops;
+		GameEvents.FirstLoopAction += StartUpdateCurrentLoopTimer;
 	}
 
 	protected void OnDisable()
 	{
 		GameEvents.DayEnded -= UpdateLoops;
+		GameEvents.FirstLoopAction -= StartUpdateCurrentLoopTimer;
 	}
 
 	protected void Update()
 	{
+		if (!_canUpdateComponent)
+		{
+			return;
+		}
 		var value = 1f - (_state.TimeEnd - Time.time) / _state.DayDuration;
 
 		// 0 -> N
@@ -83,6 +90,21 @@ public class TimelinePanel : MonoBehaviour
 			}
 		}
 
+		_canUpdateComponent = false;
+		HideSegment();
 		// TODO: Update text
+	}
+
+	private void StartUpdateCurrentLoopTimer()
+	{
+		_canUpdateComponent = true;
+	}
+
+	private void HideSegment()
+	{
+		_segmentsImages[0].localScale = new Vector3(0f, 1f, 1f);
+		_segmentsImages[1].localScale = new Vector3(0f, 1f, 1f);
+		_segmentsImages[2].localScale = new Vector3(0f, 1f, 1f);
+		_segmentsImages[3].localScale = new Vector3(0f, 1f, 1f);
 	}
 }

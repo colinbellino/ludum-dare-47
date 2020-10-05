@@ -5,6 +5,7 @@ public class TimeLord : IInitializable, ITickable
 {
 	private readonly GameState _state;
 	private readonly GameConfig _gameConfig;
+	private bool _isRunning;
 
 	public TimeLord(GameState state, GameConfig gameConfig)
 	{
@@ -14,22 +15,32 @@ public class TimeLord : IInitializable, ITickable
 
 	public void Initialize()
 	{
-		Reset();
+		// Reset();
 
-		GameEvents.GameStarted += Reset;
+		// GameEvents.GameStarted += Reset;
 		GameEvents.DayEnded += Reset;
+		GameEvents.FirstLoopAction += StartLoop;
 	}
 
 	public void Tick()
 	{
-		if (Time.time > _state.TimeEnd)
+		if (_isRunning)
 		{
-			_state.LoopCount += 1;
+			if (Time.time > _state.TimeEnd)
+			{
+				_state.LoopCount += 1;
 
-			Reset();
-			GameEvents.DayEnded?.Invoke();
-			UnityEngine.Debug.Log("Day over !");
+				Reset();
+				GameEvents.DayEnded?.Invoke();
+				UnityEngine.Debug.Log("Day over !");
+			}
 		}
+	}
+
+	public void StartLoop()
+	{
+		Reset();
+		_isRunning = true;
 	}
 
 	private void Reset()
@@ -37,5 +48,12 @@ public class TimeLord : IInitializable, ITickable
 		_state.DayDuration = _gameConfig.DayDuration;
 		_state.TimeStart = Time.time;
 		_state.TimeEnd = _state.TimeStart + _state.DayDuration;
+		_isRunning = false;
+	}
+
+	private void Exit()
+	{
+		GameEvents.FirstLoopAction -= StartLoop;
+		GameEvents.DayEnded -= Reset;
 	}
 }

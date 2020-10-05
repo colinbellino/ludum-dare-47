@@ -16,6 +16,7 @@ public class PlayState : IState
 	private GameActions _actions;
 	private Transform _cursor;
 	private bool _wasClickLastFrame;
+	private bool _isFirstLoopClick;
 
 	public PlayState(GameStateMachine machine, GameState gameState, GameConfig gameConfig)
 	{
@@ -72,6 +73,12 @@ public class PlayState : IState
 		var action1wasReleased = _actions.Gameplay.Action1.ReadValue<float>() > 0f;
 		if (action1wasReleased)
 		{
+			if (_isFirstLoopClick == false)
+			{
+				_isFirstLoopClick = true;
+				GameEvents.FirstLoopAction?.Invoke();
+			}
+
 			if (_player.IsInteracting == false)
 			{
 				var mousePosition = _actions.Gameplay.MousePosition.ReadValue<Vector2>();
@@ -143,6 +150,7 @@ public class PlayState : IState
 	{
 		ClearPlayerDestination();
 		_player.Reset(_gameState.PlayerStartPosition);
+		_isFirstLoopClick = false;
 	}
 
 	private void OnExitReached()

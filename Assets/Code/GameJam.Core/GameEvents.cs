@@ -9,6 +9,7 @@ public static class GameEvents
 	public static Action GameStarted;
 	public static Action StartGame;
 	public static Action QuitGame;
+	public static Action FirstLoopAction;
 	public static Action<IInteractive> TargetSelected;
 	public static Action TargetUnSelected;
 	public static Action<Vector3Int> LayoutChanged;
@@ -31,5 +32,6 @@ public static class GameEvents
 		StonePushed = null;
 		InterationFinished = null;
 		OnKeyCollected = null;
+		FirstLoopAction = null;
 	}
 }
