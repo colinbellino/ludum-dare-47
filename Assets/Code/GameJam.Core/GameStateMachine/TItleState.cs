@@ -52,7 +52,6 @@ public class TitleState : IState
 		else if (Mouse.current.leftButton.wasPressedThisFrame)
 		{
 			StartGame();
-
 		}
 		else if (Keyboard.current.anyKey.wasPressedThisFrame)
 		{
