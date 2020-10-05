@@ -1,3 +1,4 @@
+using System;
 using Pathfinding;
 using UnityEngine;
 
@@ -18,7 +19,15 @@ public class PlayerTag : MonoBehaviour
 		_aiDestination = GetComponent<AIDestinationSetter>();
 		_ai = GetComponent<AILerp>();
 		_audioSource = GetComponent<AudioSource>();
+
 		GameEvents.StonePushed += OnActionDone;
+		GameEvents.InterationFinished += OnInterationFinished;
+	}
+
+	protected void OnDestroy()
+	{
+		GameEvents.StonePushed -= OnActionDone;
+		GameEvents.InterationFinished -= OnInterationFinished;
 	}
 
 	public void Follow(Transform target)
@@ -62,10 +71,7 @@ public class PlayerTag : MonoBehaviour
 
 	public void CancelInteract()
 	{
-		if (_interactingWith != null)
-		{
-			_interactingWith.CancelInteract();
-		}
+		_interactingWith?.CancelInteract();
 	}
 
 	public void Reset(Vector3 position)
@@ -94,8 +100,9 @@ public class PlayerTag : MonoBehaviour
 		SetTarget(null);
 	}
 
-	protected void OnDestroy()
+	private void OnInterationFinished(IInteractive obj)
 	{
-		GameEvents.StonePushed -= OnActionDone;
+		_interactingWith = null;
+		_target = null;
 	}
 }

@@ -13,6 +13,7 @@ public static class GameEvents
 	public static Action TargetUnSelected;
 	public static Action<Vector3Int> LayoutChanged;
 	public static Action<Vector3Int, Vector3Int> StonePushed;
+	public static Action<IInteractive> InterationFinished;
 
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
 	static void Init()
@@ -23,7 +24,10 @@ public static class GameEvents
 		GameStarted = null;
 		StartGame = null;
 		QuitGame = null;
+		TargetSelected = null;
+		TargetUnSelected = null;
 		LayoutChanged = null;
 		StonePushed = null;
+		InterationFinished = null;
 	}
 }

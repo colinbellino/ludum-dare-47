@@ -44,13 +44,12 @@ public class Stone : MonoBehaviour, IInteractive
 			{
 				var initialPosition = transform.position;
 
-				// transform.position += (Vector3Int)_direction;
 				_blockingCollider.enabled = false;
 				_renderer.gameObject.SetActive(false);
 
 				var origin = new Vector3Int((int)initialPosition.x, (int)initialPosition.y, 0);
-				// var destination = origin + (Vector3Int)_direction;
 				GameEvents.StonePushed?.Invoke(origin, origin);
+				GameEvents.InterationFinished?.Invoke(this);
 				PlayActionDoneSoundEffect();
 				InstantiateParticlePrefab();
 				_done = true;

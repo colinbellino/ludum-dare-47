@@ -83,8 +83,6 @@ MonoBehaviour:
     type: 3}
   _onDoneParticlePrefab: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b,
     type: 3}
-  _selectedSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  _spriteRenderer: {fileID: 7205211658751510989}
 --- !u!82 &1460291158988479921
 AudioSource:
   m_ObjectHideFlags: 0
@@ -343,7 +341,7 @@ PrefabInstance:
     - target: {fileID: 2743021231517703403, guid: 38e5216d5e35b524d87555d1efecf35f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2743021231517703403, guid: 38e5216d5e35b524d87555d1efecf35f,
         type: 3}

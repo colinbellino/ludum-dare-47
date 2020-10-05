@@ -43,6 +43,7 @@ public class PlayState : IState
 
 		GameEvents.DayEnded += OnDayEnded;
 		GameEvents.ExitReached += OnExitReached;
+		GameEvents.InterationFinished += OnInterationFinished;
 	}
 
 	public void Tick()
@@ -71,43 +72,46 @@ public class PlayState : IState
 		var action1wasReleased = _actions.Gameplay.Action1.ReadValue<float>() > 0f;
 		if (action1wasReleased)
 		{
-			var mousePosition = _actions.Gameplay.MousePosition.ReadValue<Vector2>();
-			var ray = _camera.ScreenPointToRay(mousePosition);
-			Debug.DrawRay(ray.origin, ray.direction * 999f, Color.red, 1f);
-			var hits = Physics2D.RaycastAll(ray.origin, ray.direction, Mathf.Infinity, _gameConfig.GroundLayer | _gameConfig.InteractiveLayer);
-			foreach (var hit in hits)
+			if (_player.IsInteracting == false)
 			{
-				if (hit.collider != null)
+				var mousePosition = _actions.Gameplay.MousePosition.ReadValue<Vector2>();
+				var ray = _camera.ScreenPointToRay(mousePosition);
+				Debug.DrawRay(ray.origin, ray.direction * 999f, Color.red, 1f);
+				var hits = Physics2D.RaycastAll(ray.origin, ray.direction, Mathf.Infinity, _gameConfig.GroundLayer | _gameConfig.InteractiveLayer);
+				foreach (var hit in hits)
 				{
-					_gameState.PlayerDestination = new Vector3(
-						Mathf.Round(hit.point.x),
-						Mathf.Round(hit.point.y)
-					);
-					_player.Follow(_cursor);
-
-					var interactive = hit.collider.GetComponent<IInteractive>();
-					if (interactive != null)
+					if (hit.collider != null)
 					{
-						_player.SetTarget(interactive);
+						_gameState.PlayerDestination = new Vector3(
+							Mathf.Round(hit.point.x),
+							Mathf.Round(hit.point.y)
+						);
+						_player.Follow(_cursor);
+
+						var interactive = hit.collider.GetComponent<IInteractive>();
+						if (interactive != null)
+						{
+							_player.SetTarget(interactive);
+						}
 					}
 				}
-			}
 
-			if (!_wasClickLastFrame)
-			{
-				var interactive = Array.Find(hits, hit => hit.collider.GetComponent<IInteractive>() != null);
-
-				if (interactive.collider != null)
+				if (!_wasClickLastFrame)
 				{
-					GameEvents.TargetSelected?.Invoke(interactive.collider.GetComponent<IInteractive>());
-				}
-				else
-				{
-					GameEvents.TargetUnSelected?.Invoke();
-				}
+					var interactive = Array.Find(hits, hit => hit.collider.GetComponent<IInteractive>() != null);
 
-				_player.PlayClickSoundEffect();
-				_wasClickLastFrame = true;
+					if (interactive.collider != null)
+					{
+						GameEvents.TargetSelected?.Invoke(interactive.collider.GetComponent<IInteractive>());
+					}
+					else
+					{
+						GameEvents.TargetUnSelected?.Invoke();
+					}
+
+					_player.PlayClickSoundEffect();
+					_wasClickLastFrame = true;
+				}
 			}
 		}
 		else
@@ -117,7 +121,6 @@ public class PlayState : IState
 
 		if (_player.CanInteractWithTarget())
 		{
-			ClearPlayerDestination();
 			_player.Interact();
 		}
 		else
@@ -133,6 +136,7 @@ public class PlayState : IState
 	{
 		GameEvents.DayEnded -= OnDayEnded;
 		GameEvents.ExitReached -= OnExitReached;
+		GameEvents.InterationFinished -= OnInterationFinished;
 	}
 
 	private void OnDayEnded()
@@ -144,6 +148,11 @@ public class PlayState : IState
 	private void OnExitReached()
 	{
 		_machine.Win();
+	}
+
+	private void OnInterationFinished(IInteractive target)
+	{
+		ClearPlayerDestination();
 	}
 
 	private void ClearPlayerDestination()
