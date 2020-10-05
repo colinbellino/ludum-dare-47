@@ -44,6 +44,16 @@ PrefabInstance:
       propertyPath: _door
       value: 
       objectReference: {fileID: 1973340567610043165}
+    - target: {fileID: 4073882916295333812, guid: 1d54e0ae571dfd9438babae273b68994,
+        type: 3}
+      propertyPath: _onDoneParticlePrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4073882916295333812, guid: 1d54e0ae571dfd9438babae273b68994,
+        type: 3}
+      propertyPath: _onDoneParticlePrefabDoor
+      value: 
+      objectReference: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
     - target: {fileID: 4677773426850159017, guid: 1d54e0ae571dfd9438babae273b68994,
         type: 3}
       propertyPath: m_Name

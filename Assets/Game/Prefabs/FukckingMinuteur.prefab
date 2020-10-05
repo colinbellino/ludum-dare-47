@@ -137,7 +137,8 @@ MonoBehaviour:
     type: 3}
   _actionDoneAudioClip: {fileID: 8300000, guid: 91842cc1727f9429abe37af85e0324b7,
     type: 3}
-  _onDoneParticlePrefab: {fileID: 0}
+  _onDoneParticlePrefab: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b,
+    type: 3}
 --- !u!61 &2853182063826070197
 BoxCollider2D:
   m_ObjectHideFlags: 0

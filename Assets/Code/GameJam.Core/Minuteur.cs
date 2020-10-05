@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 
 public class Minuteur : BaseInteractive
 {
@@ -25,9 +26,15 @@ public class Minuteur : BaseInteractive
 		MinuteurUpdate();
 	}
 
-	protected override void OnInteractDone()
+	protected async override void OnInteractDone()
 	{
-		gameObject.SetActive(false);
 		GameEvents.LayoutChanged?.Invoke(_gridPosition);
+
+		_blockingCollider.enabled = false;
+		_renderer.gameObject.SetActive(false);
+
+		await UniTask.Delay(1000);
+
+		gameObject.SetActive(false);
 	}
 }
