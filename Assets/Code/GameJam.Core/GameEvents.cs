@@ -9,6 +9,8 @@ public static class GameEvents
 	public static Action GameStarted;
 	public static Action StartGame;
 	public static Action QuitGame;
+	public static Action<IInteractive> TargetSelected;
+	public static Action TargetUnSelected;
 	public static Action<Vector3Int> LayoutChanged;
 	public static Action<Vector3Int, Vector3Int> StonePushed;
 

@@ -83,6 +83,8 @@ MonoBehaviour:
     type: 3}
   _onDoneParticlePrefab: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b,
     type: 3}
+  _selectedSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  _spriteRenderer: {fileID: 7205211658751510989}
 --- !u!82 &1460291158988479921
 AudioSource:
   m_ObjectHideFlags: 0

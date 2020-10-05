@@ -72,7 +72,7 @@ public class PlayerTag : MonoBehaviour
 	{
 		CancelInteract();
 		_interactingWith = null;
-		_target = null;
+		SetTarget(null);
 		_ai.Teleport(position, true);
 		PlayDeathSoundEffect();
 	}

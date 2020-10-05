@@ -1,7 +1,9 @@
 using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
+using Object = UnityEngine.Object;
 
 public class PlayState : IState
 {
@@ -13,7 +15,7 @@ public class PlayState : IState
 	private Camera _camera;
 	private GameActions _actions;
 	private Transform _cursor;
-	private bool _clickSoundWasPlay;
+	private bool _wasClickLastFrame;
 
 	public PlayState(GameStateMachine machine, GameState gameState, GameConfig gameConfig)
 	{
@@ -69,12 +71,6 @@ public class PlayState : IState
 		var action1wasReleased = _actions.Gameplay.Action1.ReadValue<float>() > 0f;
 		if (action1wasReleased)
 		{
-			if (!_clickSoundWasPlay)
-			{
-				_player.PlayClickSoundEffect();
-				_clickSoundWasPlay = true;
-			}
-
 			var mousePosition = _actions.Gameplay.MousePosition.ReadValue<Vector2>();
 			var ray = _camera.ScreenPointToRay(mousePosition);
 			Debug.DrawRay(ray.origin, ray.direction * 999f, Color.red, 1f);
@@ -96,10 +92,27 @@ public class PlayState : IState
 					}
 				}
 			}
+
+			if (!_wasClickLastFrame)
+			{
+				var interactive = Array.Find(hits, hit => hit.collider.GetComponent<IInteractive>() != null);
+
+				if (interactive.collider != null)
+				{
+					GameEvents.TargetSelected?.Invoke(interactive.collider.GetComponent<IInteractive>());
+				}
+				else
+				{
+					GameEvents.TargetUnSelected?.Invoke();
+				}
+
+				_player.PlayClickSoundEffect();
+				_wasClickLastFrame = true;
+			}
 		}
 		else
 		{
-			_clickSoundWasPlay = false;
+			_wasClickLastFrame = false;
 		}
 
 		if (_player.CanInteractWithTarget())
