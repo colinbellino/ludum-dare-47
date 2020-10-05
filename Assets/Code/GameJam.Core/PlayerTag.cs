@@ -94,7 +94,7 @@ public class PlayerTag : MonoBehaviour
 		SetTarget(null);
 	}
 
-	protected void Destroy()
+	protected void OnDestroy()
 	{
 		GameEvents.StonePushed -= OnActionDone;
 	}

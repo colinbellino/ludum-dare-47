@@ -12,7 +12,7 @@ public class TilemapManager : MonoBehaviour
 		GameEvents.StonePushed += OnStonePushed;
 	}
 
-	protected void Destroy()
+	protected void OnDestroy()
 	{
 		GameEvents.StonePushed -= OnStonePushed;
 	}
