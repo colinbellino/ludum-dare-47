@@ -14,6 +14,7 @@ public static class GameEvents
 	public static Action<Vector3Int> LayoutChanged;
 	public static Action<Vector3Int, Vector3Int> StonePushed;
 	public static Action<IInteractive> InterationFinished;
+	public static Action<Vector3Int> OnKeyCollected;
 
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
 	static void Init()
@@ -29,5 +30,6 @@ public static class GameEvents
 		LayoutChanged = null;
 		StonePushed = null;
 		InterationFinished = null;
+		OnKeyCollected = null;
 	}
 }

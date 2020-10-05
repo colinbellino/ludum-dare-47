@@ -20,13 +20,11 @@ public class PlayerTag : MonoBehaviour
 		_ai = GetComponent<AILerp>();
 		_audioSource = GetComponent<AudioSource>();
 
-		GameEvents.StonePushed += OnActionDone;
 		GameEvents.InterationFinished += OnInterationFinished;
 	}
 
 	protected void OnDestroy()
 	{
-		GameEvents.StonePushed -= OnActionDone;
 		GameEvents.InterationFinished -= OnInterationFinished;
 	}
 
@@ -93,11 +91,6 @@ public class PlayerTag : MonoBehaviour
 	{
 		_audioSource.clip = _deathAudioClip;
 		_audioSource.Play();
-	}
-
-	private void OnActionDone(Vector3Int origin, Vector3Int destination)
-	{
-		SetTarget(null);
 	}
 
 	private void OnInterationFinished(IInteractive obj)
