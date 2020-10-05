@@ -57,12 +57,14 @@ public class PlayState : IState
 			return;
 		}
 
+#if UNITY_EDITOR
 		if (Keyboard.current.rKey.wasPressedThisFrame)
 		{
 			UnityEngine.Debug.Log("Restarting...");
 			_machine.Initialize();
 			return;
 		}
+#endif
 
 		if (action1wasReleased)
 		{
