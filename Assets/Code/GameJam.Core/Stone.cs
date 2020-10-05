@@ -13,6 +13,7 @@ public class Stone : MonoBehaviour, IInteractive
 	[SerializeField] private GameObject _onDoneParticlePrefab;
 
 	private AudioSource _audioSource;
+	private SpriteRenderer _renderer;
 
 	public Transform Transform => transform;
 
@@ -23,6 +24,7 @@ public class Stone : MonoBehaviour, IInteractive
 	protected void Awake()
 	{
 		_audioSource = GetComponent<AudioSource>();
+		_renderer = GetComponentInChildren<SpriteRenderer>();
 	}
 
 	protected void Update()
@@ -42,12 +44,13 @@ public class Stone : MonoBehaviour, IInteractive
 			{
 				var initialPosition = transform.position;
 
-				transform.position += (Vector3Int)_direction;
+				// transform.position += (Vector3Int)_direction;
 				_blockingCollider.enabled = false;
+				_renderer.gameObject.SetActive(false);
 
 				var origin = new Vector3Int((int)initialPosition.x, (int)initialPosition.y, 0);
-				var destination = origin + (Vector3Int)_direction;
-				GameEvents.StonePushed?.Invoke(origin, destination);
+				// var destination = origin + (Vector3Int)_direction;
+				GameEvents.StonePushed?.Invoke(origin, origin);
 				PlayActionDoneSoundEffect();
 				InstantiateParticlePrefab();
 				_done = true;

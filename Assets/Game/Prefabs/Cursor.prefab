@@ -129,5 +129,5 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 2661929915105922220}
   _spriteCursorGround: {fileID: -4750761433519615375, guid: d678f9ea54c8a7e42a8621d2a07fa20f,
     type: 3}
-  _spriteCursorItem: {fileID: 5213229242370633579, guid: 382fdbb18ee3e8842a4fb544b2067584,
+  _spriteCursorItem: {fileID: 2712669826960082785, guid: 5f7301654d8db6744a5b34e256ae0d73,
     type: 3}
