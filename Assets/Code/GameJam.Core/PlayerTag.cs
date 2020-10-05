@@ -18,6 +18,7 @@ public class PlayerTag : MonoBehaviour
 		_aiDestination = GetComponent<AIDestinationSetter>();
 		_aiPath = GetComponent<AIPath>();
 		_audioSource = GetComponent<AudioSource>();
+		GameEvents.StonePushed += OnActionDone;
 	}
 
 	public void Follow(Transform target)
@@ -34,7 +35,7 @@ public class PlayerTag : MonoBehaviour
 
 	public void SetTarget(IInteractive target)
 	{
-		UnityEngine.Debug.Log("-> " + target.Transform.name);
+		// UnityEngine.Debug.Log("-> " + target.Transform.name);
 		_target = target;
 	}
 
@@ -52,10 +53,7 @@ public class PlayerTag : MonoBehaviour
 			return;
 		}
 
-		if (_interactingWith != null)
-		{
-			CancelInteract();
-		}
+		CancelInteract();
 
 		_interactingWith = _target;
 		_interactingWith.Interact();
@@ -63,7 +61,10 @@ public class PlayerTag : MonoBehaviour
 
 	public void CancelInteract()
 	{
-		_interactingWith.CancelInteract();
+		if (_interactingWith != null)
+		{
+			_interactingWith.CancelInteract();
+		}
 	}
 
 	public void Reset()
@@ -80,9 +81,19 @@ public class PlayerTag : MonoBehaviour
 		_audioSource.Play();
 	}
 
-	public void PlayDeathSoundEffect()
+	private void PlayDeathSoundEffect()
 	{
 		_audioSource.clip = _deathAudioClip;
 		_audioSource.Play();
+	}
+
+	private void OnActionDone(Vector3Int origin, Vector3Int destination)
+	{
+		SetTarget(null);
+	}
+
+	protected void Destroy()
+	{
+		GameEvents.StonePushed -= OnActionDone;
 	}
 }
