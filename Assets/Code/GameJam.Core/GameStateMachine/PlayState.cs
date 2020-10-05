@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -130,12 +129,10 @@ public class PlayState : IState
 		{
 			_player.Interact();
 		}
-		else
+
+		if (_gameState.PlayerDestination != null)
 		{
-			if (_gameState.PlayerDestination != null)
-			{
-				_cursor.position = _gameState.PlayerDestination.Value;
-			}
+			_cursor.position = _gameState.PlayerDestination.Value;
 		}
 	}
 

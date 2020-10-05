@@ -73,10 +73,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60fc34ab155a45e2a7347876fe019d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _duration: 2
-  _direction: {x: 0, y: 1}
+  _duration: 30
   _blockingCollider: {fileID: 7205211658266528219}
   _progressSlider: {fileID: 927135878}
+  _progressSliderFill: {fileID: 1951536801}
   _actionStartAudioClip: {fileID: 8300000, guid: 082a48e70ad064dcbb860d493d5a1f20,
     type: 3}
   _actionDoneAudioClip: {fileID: 8300000, guid: 57a10e39ba3f948f2accf0cd60fb52bf,
@@ -251,7 +251,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -4727848491673685825, guid: e2f88465ed33e4640865e15d0099d9f4,
     type: 3}
-  m_Color: {r: 0.9411765, g: 0.20784314, b: 0.8901961, a: 1}
+  m_Color: {r: 0.754717, g: 0.04271984, b: 0.456221, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -401,5 +401,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1951536801 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2743021231248706388, guid: 38e5216d5e35b524d87555d1efecf35f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2743021230507236853}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
