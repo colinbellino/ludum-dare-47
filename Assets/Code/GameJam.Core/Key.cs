@@ -6,6 +6,9 @@ public class Key : MonoBehaviour, IInteractive
 	[SerializeField] private GameObject _door;
 	[SerializeField] private float _duration = 1f;
 	[SerializeField] private Slider _progressSlider;
+	[SerializeField] private AudioSource _audioSource;
+	[SerializeField] private AudioClip _actionStartAudioClip;
+	[SerializeField] private AudioClip _actionDoneAudioClip;
 
 	private bool _inProgress;
 	private bool _done;
@@ -35,18 +38,30 @@ public class Key : MonoBehaviour, IInteractive
 				var origin = new Vector3Int((int)initialPosition.x, (int)initialPosition.y, 0);
 				_door.SetActive(false);
 				gameObject.SetActive(false);
-
+				PlayActionDoneSoundEffect();
 				GameEvents.OnKeyCollected?.Invoke(origin);
 				GameEvents.InterationFinished?.Invoke(this);
-				// _door.GetComponent<Collider2D>().enabled = false;
 			}
 		}
+	}
+
+	private void PlayActionSoundEffect()
+	{
+		_audioSource.clip = _actionStartAudioClip;
+		_audioSource.Play();
+	}
+
+	private void PlayActionDoneSoundEffect()
+	{
+		_audioSource.clip = _actionDoneAudioClip;
+		_audioSource.Play();
 	}
 
 	public void Interact()
 	{
 		_inProgress = true;
 		_startTime = Time.time;
+		PlayActionSoundEffect();
 	}
 
 	public void CancelInteract()
