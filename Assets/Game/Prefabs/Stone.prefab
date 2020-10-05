@@ -77,9 +77,9 @@ MonoBehaviour:
   _blockingCollider: {fileID: 7205211658266528219}
   _progressSlider: {fileID: 927135878}
   _progressSliderFill: {fileID: 1951536801}
-  _actionStartAudioClip: {fileID: 8300000, guid: 082a48e70ad064dcbb860d493d5a1f20,
+  _actionStartAudioClip: {fileID: 8300000, guid: f85c99b3c411840fd9c4063f85a51fba,
     type: 3}
-  _actionDoneAudioClip: {fileID: 8300000, guid: 57a10e39ba3f948f2accf0cd60fb52bf,
+  _actionDoneAudioClip: {fileID: 8300000, guid: 91842cc1727f9429abe37af85e0324b7,
     type: 3}
   _onDoneParticlePrefab: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b,
     type: 3}

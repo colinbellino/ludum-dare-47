@@ -51,9 +51,9 @@ MonoBehaviour:
   _blockingCollider: {fileID: 805518470387811018}
   _progressSlider: {fileID: 7732870577957582362}
   _progressSliderFill: {fileID: 7732870576899610685}
-  _actionStartAudioClip: {fileID: 8300000, guid: 8f689a9b6542048af93fb1ca0dacf1f2,
+  _actionStartAudioClip: {fileID: 8300000, guid: f85c99b3c411840fd9c4063f85a51fba,
     type: 3}
-  _actionDoneAudioClip: {fileID: 8300000, guid: d12f00b7785cf4e11bbf2bb5ca66a335,
+  _actionDoneAudioClip: {fileID: 8300000, guid: 91842cc1727f9429abe37af85e0324b7,
     type: 3}
   _onDoneParticlePrefab: {fileID: 0}
   _door: {fileID: 0}
@@ -94,8 +94,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
